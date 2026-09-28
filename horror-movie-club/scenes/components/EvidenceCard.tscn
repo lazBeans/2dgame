@@ -1,0 +1,53 @@
+[gd_scene format=3 uid="uid://b481a40wln8wa"]
+
+[ext_resource type="Script" uid="uid://lursy3k38yqs" path="res://scenes/components/evidence_card.gd" id="1_fpa8w"]
+[ext_resource type="Texture2D" uid="uid://87ujuhms38j" path="res://icon.svg" id="2_fpa8w"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ufoxx"]
+
+[node name="EvidenceCard" type="Panel" unique_id=355327272]
+custom_minimum_size = Vector2(500, 608)
+propagate_maximum_size = true
+offset_top = 21.0
+offset_right = 500.0
+offset_bottom = 629.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_ufoxx")
+script = ExtResource("1_fpa8w")
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=512373659]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="." unique_id=307200550]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -227.0
+offset_top = -224.0
+offset_right = 227.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="PinButton" type="TextureButton" parent="." unique_id=2113382578]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -20.0
+offset_top = -21.0
+offset_right = 20.0
+offset_bottom = 59.0
+grow_horizontal = 2
+texture_normal = ExtResource("2_fpa8w")
+ignore_texture_size = true
+stretch_mode = 5

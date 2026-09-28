@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://c7ixvkb12rl17"]
+
+[node name="DiceRollOverlay" type="Control" unique_id=120813137]
+layout_mode = 3
+anchors_preset = 0

@@ -1,4 +1,5 @@
-[style name="dev"]
-It was a calm summer night \
-where only thing ringing in the background \
-is the choir of crickets in distance.
+test
+[signal arg="unlock_evidence: hoop_mark"]
+[signal arg="unlock_evidence: dusty_scale"]
+[signal arg="unlock_evidence: notes"]
+[signal arg="change_scene:game"]

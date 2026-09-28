@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://c88a8rli2ca7n"]
+
+[node name="PhoneOverlay" type="Control" unique_id=1204028608]
+layout_mode = 3
+anchors_preset = 0

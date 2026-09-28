@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://c0jfov38odv00"]
+
+[node name="JournalOverlay" type="Control" unique_id=1696437004]
+layout_mode = 3
+anchors_preset = 0

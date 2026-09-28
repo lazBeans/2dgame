@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EvidenceData" format=3 uid="uid://kq4x8t3jjifo"]
+
+[ext_resource type="Texture2D" uid="uid://bw2s4jf8rrrca" path="res://resources/evidence/hoop_mark.png" id="1_qk3co"]
+[ext_resource type="Script" uid="uid://ccl6tt1eg2l6m" path="res://resources/evidence/evidence_data.gd" id="1_rnhsg"]
+
+[resource]
+script = ExtResource("1_rnhsg")
+id = "hoop_mark"
+texture = ExtResource("1_qk3co")
+metadata/_custom_type_script = "uid://ccl6tt1eg2l6m"

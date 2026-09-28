@@ -1,0 +1,132 @@
+[gd_scene format=3 uid="uid://djqwg3po1gwfm"]
+
+[ext_resource type="Script" uid="uid://bm8e1onmcqpho" path="res://scenes/ui/inventory/inventory_panel.gd" id="1_2ivcs"]
+[ext_resource type="Script" uid="uid://dr24p4givqu21" path="res://scenes/ui/inventory/inventory.gd" id="1_u1d8c"]
+
+[node name="InventoryOverlay" type="CanvasLayer" unique_id=1844752738]
+
+[node name="Inventory" type="Panel" parent="." unique_id=1251600586]
+offset_top = 1266.0
+offset_right = 3840.0
+offset_bottom = 2160.0
+script = ExtResource("1_u1d8c")
+
+[node name="ScrollBox" type="ScrollContainer" parent="Inventory" unique_id=2146721204]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1835.0
+offset_top = -294.5
+offset_right = 1835.0
+offset_bottom = 294.5
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBox" type="HBoxContainer" parent="Inventory/ScrollBox" unique_id=582350305]
+layout_mode = 2
+size_flags_horizontal = 0
+size_flags_vertical = 4
+theme_override_constants/separation = 40
+
+[node name="EvidenceSlot1" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=1794847513]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot1" unique_id=1686922864]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 540.0
+
+[node name="EvidenceSlot2" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=2105974338]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot2" unique_id=137429480]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EvidenceSlot3" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=2055609492]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot3" unique_id=1947257641]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EvidenceSlot4" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=767546595]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot4" unique_id=531142360]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EvidenceSlot5" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=108333233]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot5" unique_id=970392579]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EvidenceSlot6" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=1217427272]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot6" unique_id=313052229]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 540.0
+
+[node name="EvidenceSlot7" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=976580500]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot7" unique_id=832706711]
+layout_mode = 0
+offset_right = 500.0
+offset_bottom = 540.0
+
+[node name="EvidenceSlot8" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=340400890]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot8" unique_id=837947969]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EvidenceSlot9" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=333156823]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot9" unique_id=1585228392]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="EvidenceSlot10" type="Panel" parent="Inventory/ScrollBox/VBox" unique_id=196981399]
+custom_minimum_size = Vector2(500, 540)
+layout_mode = 2
+script = ExtResource("1_2ivcs")
+
+[node name="icon" type="TextureRect" parent="Inventory/ScrollBox/VBox/EvidenceSlot10" unique_id=1086580036]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0

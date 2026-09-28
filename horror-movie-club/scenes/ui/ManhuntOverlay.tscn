@@ -1,0 +1,5 @@
+[gd_scene format=3 uid="uid://drukqex5x2pmu"]
+
+[node name="ManhuntOverlay" type="Control" unique_id=939949487]
+layout_mode = 3
+anchors_preset = 0

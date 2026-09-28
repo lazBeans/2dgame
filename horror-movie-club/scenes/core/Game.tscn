@@ -1,0 +1,70 @@
+[gd_scene format=3 uid="uid://df7hudvv2muvt"]
+
+[ext_resource type="PackedScene" uid="uid://cs4su75h6auj2" path="res://scenes/ui/DetectiveBoard.tscn" id="1_td7m5"]
+
+[sub_resource type="GDScript" id="GDScript_ve7bo"]
+script/source = "extends Node2D
+"
+
+[node name="Game" type="Node2D" unique_id=13086844]
+script = SubResource("GDScript_ve7bo")
+
+[node name="WorldContainer" type="Node2D" parent="." unique_id=1788578649]
+
+[node name="MainHUD" type="CanvasLayer" parent="." unique_id=920082924]
+
+[node name="StatusHUD" type="Control" parent="MainHUD" unique_id=23718647]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ClockDisplay" type="Label" parent="MainHUD/StatusHUD" unique_id=1225560791]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="FilmGaugeMeter" type="Control" parent="MainHUD/StatusHUD" unique_id=279876450]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="PhoneButton" type="TextureButton" parent="MainHUD/StatusHUD" unique_id=830153599]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="AlertBadge" type="TextureRect" parent="MainHUD/StatusHUD/PhoneButton" unique_id=1969091484]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="JournalButton" type="TextureButton" parent="MainHUD/StatusHUD" unique_id=2015312669]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ManhuntStep" type="Label" parent="MainHUD/StatusHUD" unique_id=316064107]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="PhoneOverlay" type="Control" parent="MainHUD" unique_id=1353194364]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ManhuntOverlay" type="Control" parent="MainHUD" unique_id=1456278057]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DialogueContainer" type="Control" parent="MainHUD" unique_id=738862750]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="DetectiveBoard" parent="." unique_id=1384433856 instance=ExtResource("1_td7m5")]
