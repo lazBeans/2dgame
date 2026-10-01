@@ -1,0 +1,9 @@
+{
+	"chapter_1":{
+		"title": "qilin",
+		"required_segments": [
+			"morphology",
+			"diet"
+			]
+	}
+}

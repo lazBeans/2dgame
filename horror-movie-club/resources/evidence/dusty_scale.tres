@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="EvidenceData" format=3 uid="uid://c720vdqeuj68w"]
 
-[ext_resource type="Texture2D" uid="uid://faymsntoqq5l" path="res://resources/evidence/dusty_scale.png" id="1_8ffft"]
+[ext_resource type="Texture2D" uid="uid://faymsntoqq5l" path="res://assets/textures/evidence/dusty_scale.png" id="1_8ffft"]
 [ext_resource type="Script" uid="uid://ccl6tt1eg2l6m" path="res://resources/evidence/evidence_data.gd" id="1_aptek"]
 
 [resource]
