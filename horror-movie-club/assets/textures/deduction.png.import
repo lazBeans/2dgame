@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://faymsntoqq5l"
-path="res://.godot/imported/dusty_scale.png-176339af128ca5e35dc00bc93e282474.ctex"
+uid="uid://laf6bwjl6kn3"
+path="res://.godot/imported/deduction.png-b0521f88ded8f59ba9e42e420fa46818.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/evidence/dusty_scale.png"
-dest_files=["res://.godot/imported/dusty_scale.png-176339af128ca5e35dc00bc93e282474.ctex"]
+source_file="res://assets/textures/deduction.png"
+dest_files=["res://.godot/imported/deduction.png-b0521f88ded8f59ba9e42e420fa46818.ctex"]
 
 [params]
 

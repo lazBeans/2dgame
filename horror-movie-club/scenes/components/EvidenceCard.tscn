@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b481a40wln8wa"]
 
 [ext_resource type="Script" uid="uid://lursy3k38yqs" path="res://scenes/components/evidence_card.gd" id="1_fpa8w"]
-[ext_resource type="Texture2D" uid="uid://bhprs51hmrj6d" path="res://resources/evidence/pin.png" id="2_fpa8w"]
-[ext_resource type="Texture2D" uid="uid://cls0l4f8akq0q" path="res://resources/evidence/pin_hover.png" id="3_3qfvb"]
+[ext_resource type="Texture2D" uid="uid://bhprs51hmrj6d" path="res://assets/textures/board/pin.png" id="2_fpa8w"]
+[ext_resource type="Texture2D" uid="uid://cls0l4f8akq0q" path="res://assets/textures/board/pin_hover.png" id="3_3qfvb"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ufoxx"]
 

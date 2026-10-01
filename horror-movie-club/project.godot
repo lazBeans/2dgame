@@ -17,12 +17,12 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+SignalBus="*uid://cbd66lerbnjvf"
+FileManager="*uid://c87hwmi38r5y5"
 Dialogic="*uid://ds2q0uclmolvu"
 GameManager="*uid://ba4q38luhw7qc"
-RoomManager="*uid://dtyxijvfqa1dc"
 DeductionManager="*uid://cj6gibfq7eahv"
-DetectiveBoard="*uid://bojocr8m2dcht"
-FileManager="*uid://c87hwmi38r5y5"
+RoomManager="*uid://dtyxijvfqa1dc"
 
 [dialogic]
 

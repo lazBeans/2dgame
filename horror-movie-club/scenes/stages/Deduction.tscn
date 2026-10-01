@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://dul3uugv2roha"]
 
-[ext_resource type="Texture2D" uid="uid://laf6bwjl6kn3" path="res://assets/art/deduction.png" id="1_h20no"]
+[ext_resource type="Texture2D" uid="uid://laf6bwjl6kn3" path="res://assets/textures/deduction.png" id="1_h20no"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h20no"]
 

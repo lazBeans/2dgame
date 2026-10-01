@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cyxlmtus8owwy"
-path="res://.godot/imported/Main menu.png-8981a1bb484f30b435d705d0a32150ea.ctex"
+uid="uid://cls0l4f8akq0q"
+path="res://.godot/imported/pin_hover.png-910f8d38155ed16ae9e4d897aefeffb4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/Main menu.png"
-dest_files=["res://.godot/imported/Main menu.png-8981a1bb484f30b435d705d0a32150ea.ctex"]
+source_file="res://assets/textures/board/pin_hover.png"
+dest_files=["res://.godot/imported/pin_hover.png-910f8d38155ed16ae9e4d897aefeffb4.ctex"]
 
 [params]
 

@@ -1,4 +1,4 @@
-## Script Purpose: Manages an individual evidence card on the detective board, 
+## PURPOSE: Manages an individual evidence card on the detective board, 
 ## handling drag-and-drop movement, dynamic texture loading, and pin click 
 ## interactions used for drawing yarn connection threads.
 extends Panel
@@ -6,6 +6,9 @@ class_name EvidenceCard
 
 signal pin_clicked(card: EvidenceCard)
 
+# ==========================================
+# EXPORTED & STATE VARIABLES
+# ==========================================
 var evidence_identifier: String = "":
 	set(value):
 		evidence_identifier = value
@@ -18,10 +21,18 @@ var drag_offset: Vector2 = Vector2.ZERO
 @onready var label: Label = $Label
 @onready var pin_button: TextureButton = $PinButton
 
+# ==========================================
+# INITIALIZATION
+# ==========================================
+
 ## Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	if pin_button:
 		pin_button.pressed.connect(_on_pin_pressed)
+
+# ==========================================
+# DISPLAY & SETUP
+# ==========================================
 
 ## Updates the card's text label based on the current evidence identifier resource.
 func _update_card_display() -> void:
@@ -47,6 +58,10 @@ func setup(id: String) -> void:
 	else:
 		push_error("EvidenceCard: Failed to load EvidenceData resource at path: " + resource_path)
 
+# ==========================================
+# INPUT & DRAGGING BEHAVIOR
+# ==========================================
+
 ## Handles mouse button input events to toggle dragging state and bring the card to the foreground.
 func _gui_input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
@@ -66,6 +81,10 @@ func _gui_input(event: InputEvent) -> void:
 func _input(event: InputEvent) -> void:
 	if is_dragging and event is InputEventMouseMotion:
 		global_position = get_global_mouse_position() - drag_offset
+
+# ==========================================
+# SIGNAL CALLBACKS
+# ==========================================
 
 ## Handles pin button clicks, relaying the event to the ThreadContainer to create yarn connections.
 func _on_pin_pressed() -> void:

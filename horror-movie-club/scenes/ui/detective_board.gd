@@ -1,31 +1,29 @@
-## Script Purpose: Manages the detective board overlay, evidence tray coordination, 
-## board visibility toggles, and UI-to-manager event relays.
+## PURPOSE: Main orchestrator for the Detective Board UI layer.
+## Manages board visibility toggles via key inputs, coordinates incoming evidence tray updates,
+## handles card instantiation from drop events, and listens for puzzle completion milestones.
 extends CanvasLayer
-class_name DetectiveBoardScene
+class_name DetectiveBoard
 
-signal board_toggled(is_open: bool)
-
+# ==========================================
+# EXPORTED & ONREADY REFERENCES
+# ==========================================
 @export var evidence_card_scene: PackedScene = preload("res://scenes/components/EvidenceCard.tscn")
 @onready var board_container = find_child("BoardContainer")
 @onready var tray_slot = find_child("TraySlot")
 
-var thread_container: Node = null
 var stored_final_timeline: String = ""
 
-## Called when the node enters the scene tree; initializes signals and updates tray.
+# ==========================================
+# INITIALIZATION & SIGNAL BINDINGS
+# ==========================================
+
+## Hides the board by default on startup and hooks up global signal listeners.
 func _ready() -> void:
 	visible = false
 	
-	thread_container = get_tree().get_first_node_in_group("thread_container")
-	if thread_container and thread_container.has_signal("all_segments_unlocked"):
-		if not thread_container.all_segments_unlocked.is_connected(_on_all_segments_unlocked):
-			thread_container.all_segments_unlocked.connect(_on_all_segments_unlocked)
-	
-	GameManager.evidence_queued.connect(_on_manager_evidence_queued)
-	GameManager.board_reset.connect(_on_manager_board_reset)
-	
-	if GameManager.has_signal("board_toggle_requested"):
-		GameManager.board_toggle_requested.connect(toggle_board)
+	SignalBus.all_segments_unlocked.connect(_on_all_segments_unlocked)
+	SignalBus.evidence_queued.connect(_on_manager_evidence_queued)
+	SignalBus.board_reset.connect(_on_manager_board_reset)
 	
 	if tray_slot:
 		tray_slot.slot_emptied.connect(_on_tray_emptied)
@@ -33,35 +31,21 @@ func _ready() -> void:
 		
 	call_deferred("update_tray")
 
-## Triggered when all puzzle segments are unlocked; spawns the deduction button.
-func _on_all_segments_unlocked(connection_data: Variant) -> void:
-	print("Puzzle complete! Spawning deduction button in the tray.")
-	stored_final_timeline = connection_data
-	
-	if tray_slot and tray_slot.has_method("spawn_deduction_button"):
-		tray_slot.spawn_deduction_button()
-	else:
-		push_error("DetectiveBoardScene: TraySlot reference is missing spawn_deduction_button()!")
+# ==========================================
+# INPUT & TOGGLE CONTROLS
+# ==========================================
 
-## Triggered when the deduction button is pressed; transitions to the deduction scene.
-func _on_start_deduction_pressed() -> void:
-	print("Start Deduction clicked. Tracking current room and transitioning...")
-	if get_tree().current_scene:
-		GameManager.previous_room_scene = get_tree().current_scene.scene_file_path
-	GameManager.pending_deduction_timeline = stored_final_timeline
-	get_tree().change_scene_to_file("res://scenes/deduction_scene.tscn")
-
-## Listens for shortcut inputs (Tab) to toggle board visibility.
+## Listens for shortcut keys (like Tab) to toggle the detective board's visibility.
 func _input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
 		if event.keycode == KEY_TAB:
 			toggle_board()
 			get_viewport().set_input_as_handled()
 
-## Toggles the visibility state of the detective board overlay and thread container.
+## Toggles the canvas visibility state, synchronizes thread line nodes, and updates the tray.
 func toggle_board() -> void:
 	visible = not visible
-	board_toggled.emit(visible)
+	SignalBus.board_toggled.emit(visible)
 	
 	var tc = get_tree().get_first_node_in_group("thread_container")
 	if tc:
@@ -72,20 +56,23 @@ func toggle_board() -> void:
 	if visible:
 		update_tray()
 
-## Pulls pending evidence from the GameManager and populates the tray slot.
+# ==========================================
+# TRAY & EVIDENCE MANAGEMENT
+# ==========================================
+
+## Checks the GameManager for pending evidence items and populates the tray slot if open.
 func update_tray() -> void:
 	if not visible:
 		return
-		
 	if tray_slot and tray_slot.is_empty() and GameManager.has_pending_evidence():
 		var next_id = GameManager.pop_next_evidence()
 		tray_slot.set_evidence(next_id)
 
-## Returns true if dropped data is a valid non-empty tray slot.
+## Returns true if the incoming payload is valid for dropping onto the board.
 func can_drop_evidence(data: Variant) -> bool:
 	return data is TraySlot and not data.is_empty()
 
-## Instantiates and places a new evidence card onto the board from a dropped tray item.
+## Instantiates a physical EvidenceCard onto the board canvas at the specified mouse drop position.
 func drop_evidence(at_position: Vector2, data: Variant) -> void:
 	if data is TraySlot:
 		var evidence_id = data.get_evidence_id()
@@ -96,10 +83,8 @@ func drop_evidence(at_position: Vector2, data: Variant) -> void:
 			board_container.add_child(new_card)
 			new_card.global_position = at_position - (new_card.size / 2)
 			new_card.setup(evidence_id)
-		else:
-			push_error("DetectiveBoardScene: Failed to instantiate EvidenceCard.")
 
-## Clears all visual evidence cards and reset lines on the board.
+## Wipes all evidence cards from the board workspace and clears lines/tray state.
 func clear_board_visuals() -> void:
 	if tray_slot:
 		tray_slot.clear_slot()
@@ -111,14 +96,29 @@ func clear_board_visuals() -> void:
 	if tc and tc.has_method("clear_lines"):
 		tc.clear_lines()
 
-## Refreshes the tray when new evidence is queued in GameManager.
+# ==========================================
+# SIGNAL CALLBACKS
+# ==========================================
+
+## Handles unlocking all segments by storing the final timeline and prompting the tray button.
+func _on_all_segments_unlocked(connection_data: Variant) -> void:
+	stored_final_timeline = connection_data
+	if tray_slot and tray_slot.has_method("spawn_deduction_button"):
+		tray_slot.spawn_deduction_button()
+
+## Launches the chapter deduction Dialogic timeline when the deduction button is pressed.
+func _on_start_deduction_pressed() -> void:
+	var deduction_timeline = GameManager.current_chapter + "_deduction"
+	Dialogic.start(deduction_timeline)
+
+## Triggers tray updates when new evidence arrives in the global queue.
 func _on_manager_evidence_queued(_evidence_id: String) -> void:
 	update_tray()
 
-## Clears the board visuals when requested by GameManager.
+## Resets board visuals when triggered by a global board reset signal.
 func _on_manager_board_reset() -> void:
 	clear_board_visuals()
 
-## Automatically checks and updates the tray when it is emptied.
+## Automatically triggers tray refreshes when a slot is emptied.
 func _on_tray_emptied() -> void:
 	call_deferred("update_tray")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bw2s4jf8rrrca"
-path="res://.godot/imported/hoop_mark.png-604cc0d92a7479fc9325d631830ead13.ctex"
+uid="uid://bhprs51hmrj6d"
+path="res://.godot/imported/pin.png-41de528ca16b6ba3dee638b887aef71e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://resources/evidence/hoop_mark.png"
-dest_files=["res://.godot/imported/hoop_mark.png-604cc0d92a7479fc9325d631830ead13.ctex"]
+source_file="res://assets/textures/board/pin.png"
+dest_files=["res://.godot/imported/pin.png-41de528ca16b6ba3dee638b887aef71e.ctex"]
 
 [params]
 

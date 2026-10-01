@@ -1,0 +1,97 @@
+[gd_scene format=3 uid="uid://cs4su75h6auj2"]
+
+[ext_resource type="Script" uid="uid://d0lbmpg1alb63" path="res://scenes/stages/tray_slot.gd" id="1_855we"]
+[ext_resource type="Script" uid="uid://bojocr8m2dcht" path="res://scenes/ui/detective_board.gd" id="1_qyx12"]
+[ext_resource type="Script" uid="uid://dvm0siand1tm7" path="res://scenes/ui/thread_container.gd" id="2_4vbfl"]
+[ext_resource type="Script" uid="uid://dkomuvstka8pk" path="res://scenes/ui/board_container.gd" id="2_fouw5"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d2q47"]
+
+[node name="DetectiveBoard" type="CanvasLayer" unique_id=1398177518]
+script = ExtResource("1_qyx12")
+
+[node name="BackgroundOverlay" type="ColorRect" parent="." unique_id=525773832]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.70070595, 0.54762816, 0.4061768, 1)
+
+[node name="MainLayout" type="Control" parent="." unique_id=1734333679]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CorkBackground" type="TextureRect" parent="MainLayout" unique_id=1517056557]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+
+[node name="BoardContainer" type="Control" parent="MainLayout" unique_id=1795963159]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_fouw5")
+
+[node name="ThreadContainer" type="Control" parent="MainLayout" unique_id=502504278]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+script = ExtResource("2_4vbfl")
+
+[node name="TempLine" type="Line2D" parent="MainLayout/ThreadContainer" unique_id=1297022031]
+
+[node name="TraySlot" type="Panel" parent="MainLayout" unique_id=275584466]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -230.0
+offset_top = -568.0
+offset_right = 230.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_d2q47")
+script = ExtResource("1_855we")
+
+[node name="TextureRect" type="TextureRect" parent="MainLayout/TraySlot" unique_id=1162070173]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+expand_mode = 1
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="MainLayout/TraySlot" unique_id=950764410]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -227.0
+offset_top = -224.0
+offset_right = 227.0
+grow_horizontal = 2
+grow_vertical = 0
