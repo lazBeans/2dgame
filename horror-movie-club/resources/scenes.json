@@ -1,0 +1,5 @@
+{
+	"game": "res://scenes/core/Game.tscn",
+	"combat": "res://scenes/stages/combat_arena.tscn",
+	"deduction": "res://scenes/stages/Deduction.tscn"
+}

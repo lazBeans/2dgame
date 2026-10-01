@@ -1,17 +1,21 @@
-# GameManager.gd
+## Script Purpose: Global autoload manager handling core game state, 
+## evidence queue management, chapter tracking, and Dialogic signal event routing.
 extends Node
 
 signal evidence_queued(evidence_id: String)
 signal board_reset
+signal chapter_changed(current_chapter: String)
 
 var pending_evidence_queue: Array[String] = []
+var current_chapter: String = "chapter_1"
 
+## Called when the node enters the scene tree; defers Dialogic signal connection.
 func _ready() -> void:
-	# Defer connection so it runs safely after all autoloads finish initializing
 	call_deferred("_connect_dialogic")
+	print(current_chapter)
 
+## Verifies Dialogic exists in the root tree and connects global event and text signals.
 func _connect_dialogic() -> void:
-	# Verify Dialogic exists in the root tree
 	var dialogic_node = get_node_or_null("/root/Dialogic")
 	if dialogic_node:
 		if not Dialogic.signal_event.is_connected(_on_dialogic_signal):
@@ -24,6 +28,7 @@ func _connect_dialogic() -> void:
 	else:
 		print("GameManager: Warning - Dialogic autoload not found at /root/Dialogic.")
 
+## Handles incoming Dialogic custom signals to unlock evidence, switch scenes, or change chapters.
 func _on_dialogic_signal(argument: Variant) -> void:
 	var arg_str = str(argument).strip_edges()
 	print("GameManager: Received Dialogic signal -> ", arg_str)
@@ -36,36 +41,33 @@ func _on_dialogic_signal(argument: Variant) -> void:
 		
 	elif arg_str.begins_with("change_scene:"):
 		var scene_name = arg_str.get_slice(":", 1).strip_edges()
+		print(scene_name)
 		print("GameManager: Matched change_scene! Target name -> ", scene_name)
 		
-		var scene_paths: Dictionary = {
-			"game": "res://scenes/core/Game.tscn",
-			"combat_arena": "res://scenes/stages/combat_arena.tscn",
-		}
-		
-		if scene_paths.has(scene_name):
-			var target_path = scene_paths[scene_name]
+		if FileManager.load_scene(scene_name):
+			var target_path = FileManager.load_scene(scene_name)
 			print("GameManager: Changing scene to -> ", target_path)
 			
-			# Cleanly end the active timeline before switching scenes
 			Dialogic.end_timeline()
-					
 			get_tree().change_scene_to_file(target_path)
 		else:
 			push_error("GameManager: Invalid scene key: '" + scene_name + "'")
 			
 	elif arg_str.begins_with("set_chapter:"):
 		var chapter_num = arg_str.get_slice(":", 1).strip_edges()
-		print("GameManager: Chapter changed -> ", chapter_num)
-		pending_evidence_queue.clear()
+		current_chapter = chapter_num
+		emit_signal("chapter_changed", current_chapter)
 		board_reset.emit()
 
+## Receives and logs incoming Dialogic text signals.
 func _on_dialogic_text_signal(argument: String) -> void:
 	print("GameManager: Received Text Signal -> ", argument)
 
+## Returns true if there are items waiting in the pending evidence queue.
 func has_pending_evidence() -> bool:
 	return not pending_evidence_queue.is_empty()
 
+## Pops and returns the next evidence ID from the pending queue.
 func pop_next_evidence() -> String:
 	if not pending_evidence_queue.is_empty():
 		return pending_evidence_queue.pop_front()

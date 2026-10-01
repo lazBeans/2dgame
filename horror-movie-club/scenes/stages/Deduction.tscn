@@ -1,0 +1,137 @@
+[gd_scene format=3 uid="uid://dul3uugv2roha"]
+
+[ext_resource type="Texture2D" uid="uid://laf6bwjl6kn3" path="res://assets/art/deduction.png" id="1_h20no"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h20no"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_teq53"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j05r2"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3rml2"]
+
+[node name="Deduction" type="Control" unique_id=179710515]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="." unique_id=2106629062]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_h20no")
+
+[node name="Event1" type="Panel" parent="." unique_id=675416272]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 0
+offset_left = 2989.0
+offset_top = 957.0
+offset_right = 3629.0
+offset_bottom = 1437.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+
+[node name="Label" type="Label" parent="Event1" unique_id=1665599937]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Event2" type="Panel" parent="." unique_id=364825361]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 0
+offset_left = 2721.0
+offset_right = 3361.0
+offset_bottom = 480.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+
+[node name="Label" type="Label" parent="Event2" unique_id=752975396]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Event3" type="Panel" parent="." unique_id=2073433887]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 0
+offset_left = 201.0
+offset_top = 934.0
+offset_right = 841.0
+offset_bottom = 1414.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+
+[node name="Label" type="Label" parent="Event3" unique_id=798872624]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Event4" type="Panel" parent="." unique_id=379031247]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 0
+offset_left = 561.0
+offset_right = 1201.0
+offset_bottom = 480.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+
+[node name="Label" type="Label" parent="Event4" unique_id=699134050]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="OrderedSlot" type="HBoxContainer" parent="." unique_id=797740360]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -1399.0
+offset_top = 429.0
+offset_right = 1401.0
+offset_bottom = 909.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 80
+
+[node name="Slot1" type="Panel" parent="OrderedSlot" unique_id=648292342]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+
+[node name="Label" type="Label" parent="OrderedSlot/Slot1" unique_id=1090871774]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Slot2" type="Panel" parent="OrderedSlot" unique_id=796500401]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_teq53")
+
+[node name="Label" type="Label" parent="OrderedSlot/Slot2" unique_id=314477126]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Slot3" type="Panel" parent="OrderedSlot" unique_id=115388131]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_j05r2")
+
+[node name="Label" type="Label" parent="OrderedSlot/Slot3" unique_id=307889018]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Slot4" type="Panel" parent="OrderedSlot" unique_id=1585709560]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_3rml2")
+
+[node name="Label" type="Label" parent="OrderedSlot/Slot4" unique_id=2123656989]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

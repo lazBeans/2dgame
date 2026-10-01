@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EvidenceData" format=3 uid="uid://duwbb0pxfa4tl"]
+
+[ext_resource type="Script" uid="uid://ccl6tt1eg2l6m" path="res://resources/evidence/evidence_data.gd" id="1_s0585"]
+[ext_resource type="Texture2D" uid="uid://d3eorip1kgn0y" path="res://resources/evidence/notes2.png" id="2_s0585"]
+
+[resource]
+script = ExtResource("1_s0585")
+id = "notes"
+texture = ExtResource("2_s0585")
+metadata/_custom_type_script = "uid://ccl6tt1eg2l6m"

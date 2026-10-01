@@ -19,17 +19,30 @@ config/icon="res://icon.svg"
 
 Dialogic="*uid://ds2q0uclmolvu"
 GameManager="*uid://ba4q38luhw7qc"
+RoomManager="*uid://dtyxijvfqa1dc"
+DeductionManager="*uid://cj6gibfq7eahv"
+DetectiveBoard="*uid://bojocr8m2dcht"
+FileManager="*uid://c87hwmi38r5y5"
 
 [dialogic]
 
 directories/dch_directory={}
 directories/dtl_directory={
-"prologue": "res://timelines/prologue.dtl"
+"chapter_1_deduction": "res://timelines/chapter_1_deduction.dtl",
+"chatper_1_deduction": "res://timelines/chatper_1_deduction.dtl",
+"end_chapter_1": "res://timelines/end_chapter_1.dtl",
+"prologue": "res://timelines/prologue.dtl",
+"qilin_hunt": "res://timelines/qilin_hunt.dtl",
+"timeline_ch1_scale_and_hoop": "res://timelines/timeline_ch1_scale_and_hoop.dtl",
+"timeline_ch1_what_went_missing": "res://timelines/timeline_ch1_what_went_missing.dtl"
 }
-layout/style_directory={}
+layout/style_directory={
+"": "res://timelines/test.tres",
+"test": "res://timelines/test.tres"
+}
 glossary/default_case_sensitive=true
-layout/style_list=[]
-layout/default_style=""
+layout/style_list=["res://timelines/test.tres"]
+layout/default_style="res://timelines/test.tres"
 variables={}
 text/letter_speed=0.01
 text/initial_text_reveal_skippable=true
@@ -72,7 +85,7 @@ runtime/balloon_path="res://sprites/balloon.tscn"
 
 window/size/viewport_width=3840
 window/size/viewport_height=2160
-window/size/mode=3
+window/size/mode=4
 window/size/resizable=false
 window/size/borderless=true
 window/stretch/mode="viewport"
