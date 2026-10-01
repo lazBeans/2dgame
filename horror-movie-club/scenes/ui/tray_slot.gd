@@ -1,5 +1,5 @@
 ## PURPOSE: Manages the inventory tray slot where new evidence items arrive.
-## Handles holding current evidence data, preview rendering during drag-and-drop operations,
+## Handles holding current evidence data, integration with DragManager for payload delivery,
 ## and spawning the final deduction trigger button when a chapter is solved.
 extends Panel
 class_name TraySlot
@@ -91,7 +91,7 @@ func clear_slot() -> void:
 # DRAG-AND-DROP PAYLOAD HANDLING
 # ==========================================
 
-## Generates a visual preview container when dragging evidence out of the tray slot.
+## Generates a see-through visual preview matching the tray slot's exact size and registers the drag state.
 func _get_drag_data(_at_position: Vector2) -> Variant:
 	if is_empty():
 		return null
@@ -100,13 +100,21 @@ func _get_drag_data(_at_position: Vector2) -> Variant:
 	if texture_rect:
 		preview.texture = texture_rect.texture
 	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	preview.custom_minimum_size = Vector2(500, 608)
-	preview.size = Vector2(500, 608)
+	
+	# Match the exact dimensions of the original slot without distortion
+	preview.size = size
 	preview.position = -_at_position
+	
+	# Make the drag preview see-through
+	preview.modulate.a = 0.6
 	
 	var drag_container = Control.new()
 	drag_container.add_child(preview)
 	set_drag_preview(drag_container)
+	
+	if DragManager:
+		DragManager.start_drag(self)
+		
 	return self
 
 # ==========================================
