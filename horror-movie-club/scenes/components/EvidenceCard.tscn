@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://b481a40wln8wa"]
 
-[ext_resource type="Script" uid="uid://lursy3k38yqs" path="res://scenes/components/evidence_card.gd" id="1_fpa8w"]
-[ext_resource type="Texture2D" uid="uid://bhprs51hmrj6d" path="res://assets/textures/board/pin.png" id="2_fpa8w"]
-[ext_resource type="Texture2D" uid="uid://cls0l4f8akq0q" path="res://assets/textures/board/pin_hover.png" id="3_3qfvb"]
+[ext_resource type="Script" uid="uid://lursy3k38yqs" path="res://scenes/components/evidence_card.gd" id="1_7xiqg"]
+[ext_resource type="Texture2D" uid="uid://bhprs51hmrj6d" path="res://assets/textures/board/pin.png" id="2_3vc6w"]
+[ext_resource type="Texture2D" uid="uid://cls0l4f8akq0q" path="res://assets/textures/board/pin_hover.png" id="3_b0sf4"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_ufoxx"]
 
@@ -13,7 +13,7 @@ offset_top = 21.0
 offset_right = 500.0
 offset_bottom = 629.0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_ufoxx")
-script = ExtResource("1_fpa8w")
+script = ExtResource("1_7xiqg")
 
 [node name="TextureRect" type="TextureRect" parent="." unique_id=512373659]
 layout_mode = 1
@@ -49,6 +49,6 @@ offset_top = -57.0
 offset_right = 65.5
 offset_bottom = 65.0
 grow_horizontal = 2
-texture_normal = ExtResource("2_fpa8w")
-texture_hover = ExtResource("3_3qfvb")
+texture_normal = ExtResource("2_3vc6w")
+texture_hover = ExtResource("3_b0sf4")
 stretch_mode = 3

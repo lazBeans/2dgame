@@ -27,60 +27,6 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_h20no")
 
-[node name="Event1" type="Panel" parent="." unique_id=675416272]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 0
-offset_left = 2989.0
-offset_top = 957.0
-offset_right = 3629.0
-offset_bottom = 1437.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="Event1" unique_id=1665599937]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Event2" type="Panel" parent="." unique_id=364825361]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 0
-offset_left = 2721.0
-offset_right = 3361.0
-offset_bottom = 480.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="Event2" unique_id=752975396]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Event3" type="Panel" parent="." unique_id=2073433887]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 0
-offset_left = 201.0
-offset_top = 934.0
-offset_right = 841.0
-offset_bottom = 1414.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="Event3" unique_id=798872624]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Event4" type="Panel" parent="." unique_id=379031247]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 0
-offset_left = 561.0
-offset_right = 1201.0
-offset_bottom = 480.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="Event4" unique_id=699134050]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
 [node name="OrderedSlot" type="HBoxContainer" parent="." unique_id=797740360]
 layout_mode = 1
 anchors_preset = 8
@@ -132,6 +78,60 @@ layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3rml2")
 
 [node name="Label" type="Label" parent="OrderedSlot/Slot4" unique_id=2123656989]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Event1" type="Panel" parent="." unique_id=675416272]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 0
+offset_left = 2989.0
+offset_top = 957.0
+offset_right = 3629.0
+offset_bottom = 1437.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+
+[node name="Label" type="Label" parent="Event1" unique_id=1665599937]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Event2" type="Panel" parent="." unique_id=364825361]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 0
+offset_left = 2721.0
+offset_right = 3361.0
+offset_bottom = 480.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+
+[node name="Label" type="Label" parent="Event2" unique_id=752975396]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Event3" type="Panel" parent="." unique_id=2073433887]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 0
+offset_left = 201.0
+offset_top = 934.0
+offset_right = 841.0
+offset_bottom = 1414.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+
+[node name="Label" type="Label" parent="Event3" unique_id=798872624]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0
+
+[node name="Event4" type="Panel" parent="." unique_id=379031247]
+custom_minimum_size = Vector2(640, 480)
+layout_mode = 0
+offset_left = 561.0
+offset_right = 1201.0
+offset_bottom = 480.0
+theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+
+[node name="Label" type="Label" parent="Event4" unique_id=699134050]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0

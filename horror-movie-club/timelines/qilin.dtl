@@ -1,2 +1,2 @@
-Test Successful
+[signal arg="entity: qilin"]
 [signal arg="change_scene: combat"]

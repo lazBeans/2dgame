@@ -2,9 +2,17 @@
 ## chained dialogue events between clue resolutions and chapter deductions.
 extends Node
 
+signal slot_emptied
+signal slot_filled
+
 # ==========================================
 # INITIALIZATION
 # ==========================================
+var current_ch = GameManager.current_chapter
+var ordered_segments = FileManager.load_required_segments(current_ch)
+var _segment_id: String = ""
+
+# @onready var label: Label = $Label
 
 ## Placeholder initialization hook.
 func _ready() -> void:
@@ -35,6 +43,6 @@ func _on_clue_dialogue_finished() -> void:
 
 ## Fetches required chapter segments from FileManager to set up deduction puzzles.
 func populate_segment_queue(ch: String) -> void:
-	var current_ch = GameManager.current_chapter
-	var ordered_segments = FileManager.load_required_segments(current_ch)
+	pass
 	# Processing ordered_segments continues here
+	

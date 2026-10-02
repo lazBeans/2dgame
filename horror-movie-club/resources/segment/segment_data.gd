@@ -1,6 +1,6 @@
 # res://scripts/resources/Segment.gd
 extends Resource
-class_name Segment
+class_name SegmentData
 
 ## Unique string identifier matching the ID passed from Dialogic signals (e.g., "hoop_shape").
 @export var id: String = ""

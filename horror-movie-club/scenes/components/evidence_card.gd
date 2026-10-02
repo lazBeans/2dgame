@@ -1,7 +1,7 @@
 ## PURPOSE: Manages an individual evidence card on the detective board, 
 ## handling free-form dragging on the board via DragManager, dynamic texture loading, 
 ## and pin click interactions used for drawing yarn connection threads.
-extends Panel
+extends DetectiveCardBase
 class_name EvidenceCard
 
 signal pin_clicked(card: EvidenceCard)
@@ -13,9 +13,6 @@ var evidence_identifier: String = "":
 	set(value):
 		evidence_identifier = value
 		_update_card_display()
-
-var is_dragging: bool = false
-var drag_offset: Vector2 = Vector2.ZERO
 
 @onready var texture_rect: TextureRect = $TextureRect
 @onready var label: Label = $Label
@@ -38,6 +35,7 @@ func _ready() -> void:
 func _update_card_display() -> void:
 	if evidence_identifier.is_empty():
 		return
+		
 	var resource_path = "res://resources/evidence/" + evidence_identifier + ".tres"
 	var evidence_data = load(resource_path) as EvidenceData
 	
@@ -45,9 +43,8 @@ func _update_card_display() -> void:
 		label.text = evidence_data.evidence_name
 
 ## Sets up the card with a given evidence ID, loading both its image texture and title.
-func setup(id: String) -> void:
-	evidence_identifier = id
-	var resource_path = "res://resources/evidence/" + evidence_identifier + ".tres"
+func setup_card_visual() -> void:
+	var resource_path = "res://resources/evidence/" + card_identifier + ".tres"
 	var evidence_data = load(resource_path) as EvidenceData
 	
 	if evidence_data:
@@ -56,37 +53,21 @@ func setup(id: String) -> void:
 		if label:
 			label.text = evidence_data.evidence_name
 	else:
-		push_error("EvidenceCard: Failed to load EvidenceData resource at path: " + resource_path)
+		push_error("EvidenceCard: Failed to load Card resource at path: " + resource_path)
 
 # ==========================================
 # INPUT & DRAGGING BEHAVIOR
 # ==========================================
 
-## Handles mouse button input events to toggle dragging state, notify DragManager, and bring the card to the foreground.
-func _gui_input(event: InputEvent) -> void:
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if event.pressed:
-			is_dragging = true
-			pin_button.visible = false
-			drag_offset = get_local_mouse_position()
-			
-			if DragManager:
-				DragManager.start_drag(self)
-			
-			var parent_node = get_parent()
-			if parent_node:
-				parent_node.move_child(self, parent_node.get_child_count() - 1)
-		else:
-			is_dragging = false
-			pin_button.visible = true
-			
-			if DragManager:
-				DragManager.end_drag(true)
+func start_dragging() -> void:
+	super()
+	if pin_button:
+		pin_button.visible = false
 
-## Updates the card's global position smoothly while it is being dragged by the mouse.
-func _input(event: InputEvent) -> void:
-	if is_dragging and event is InputEventMouseMotion:
-		global_position = get_global_mouse_position() - drag_offset
+func stop_dragging() -> void:
+	super()
+	if pin_button:
+		pin_button.visible = true
 
 # ==========================================
 # SIGNAL CALLBACKS

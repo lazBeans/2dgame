@@ -1,9 +1,9 @@
 [gd_scene format=3 uid="uid://cs4su75h6auj2"]
 
-[ext_resource type="Script" uid="uid://d0lbmpg1alb63" path="res://scenes/ui/tray_slot.gd" id="1_855we"]
-[ext_resource type="Script" uid="uid://bojocr8m2dcht" path="res://scenes/ui/detective_board.gd" id="1_qyx12"]
-[ext_resource type="Script" uid="uid://dvm0siand1tm7" path="res://scenes/ui/thread_container.gd" id="2_4vbfl"]
-[ext_resource type="Script" uid="uid://dkomuvstka8pk" path="res://scenes/ui/board_container.gd" id="2_fouw5"]
+[ext_resource type="Script" uid="uid://d0lbmpg1alb63" path="res://scenes/ui/detective_board/tray_slot.gd" id="1_855we"]
+[ext_resource type="Script" uid="uid://bojocr8m2dcht" path="res://scenes/ui/detective_board/detective_board.gd" id="1_qyx12"]
+[ext_resource type="Script" uid="uid://dvm0siand1tm7" path="res://scenes/ui/detective_board/thread_container.gd" id="2_4vbfl"]
+[ext_resource type="Script" uid="uid://dkomuvstka8pk" path="res://scenes/ui/detective_board/board_container.gd" id="2_fouw5"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d2q47"]
 

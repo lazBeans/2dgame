@@ -1,21 +1,18 @@
 ## PURPOSE: Manages the inventory tray slot where new evidence items arrive.
 ## Handles holding current evidence data, integration with DragManager for payload delivery,
 ## and spawning the final deduction trigger button when a chapter is solved.
-extends Panel
+extends DetectiveSlotBase
 class_name TraySlot
 
-signal slot_emptied
 signal slot_filled(evidence_id: String)
 signal deduction_button_pressed
 
 # ==========================================
 # STATE & EXPORT VARIABLES
 # ==========================================
-var _evidence_id: String = ""
+
 var active_button: Node = null
 
-@onready var texture_rect: TextureRect = $TextureRect
-@onready var label: Label = $Label
 @export var deduction_button_scene: PackedScene
 
 # ==========================================
@@ -25,23 +22,6 @@ var active_button: Node = null
 ## Clears the tray slot on startup.
 func _ready() -> void:
 	clear_slot()
-
-## Clears stuck forbidden cursor artifacts if frame conditions change.
-func _process(_delta: float) -> void:
-	if Input.get_current_cursor_shape() == CURSOR_FORBIDDEN:
-		DisplayServer.cursor_set_shape(DisplayServer.CURSOR_ARROW)
-
-# ==========================================
-# STATE GETTERS
-# ==========================================
-
-## Returns the ID of the evidence currently resting in the tray.
-func get_evidence_id() -> String:
-	return _evidence_id
-
-## Returns true if the tray slot is currently empty.
-func is_empty() -> bool:
-	return _evidence_id.is_empty()
 
 # ==========================================
 # EVIDENCE SETUP & CLEARING
@@ -53,13 +33,8 @@ func set_evidence(id: String) -> void:
 
 ## Loads evidence resource data and populates the tray graphics (texture and label).
 func setup_tray_item(id: String) -> void:
-	_evidence_id = id
-	
-	if _evidence_id.is_empty():
-		clear_slot()
-		return
-	
-	var resource_path = "res://resources/evidence/" + _evidence_id + ".tres"
+	super(id)
+	var resource_path = "res://resources/evidence/" + _card_id + ".tres"
 	var evidence_data = load(resource_path) as EvidenceData
 	
 	if evidence_data:
@@ -73,49 +48,9 @@ func setup_tray_item(id: String) -> void:
 			label.text = evidence_data.evidence_name
 			label.visible = true
 		visible = true
-		slot_filled.emit(_evidence_id)
+		slot_filled.emit(_card_id)
 	else:
 		clear_slot()
-
-## Resets the tray slot back to an empty, hidden state.
-func clear_slot() -> void:
-	_evidence_id = ""
-	if texture_rect:
-		texture_rect.texture = null
-	if label:
-		label.text = ""
-		label.visible = false
-	slot_emptied.emit()
-
-# ==========================================
-# DRAG-AND-DROP PAYLOAD HANDLING
-# ==========================================
-
-## Generates a see-through visual preview matching the tray slot's exact size and registers the drag state.
-func _get_drag_data(_at_position: Vector2) -> Variant:
-	if is_empty():
-		return null
-	
-	var preview = TextureRect.new()
-	if texture_rect:
-		preview.texture = texture_rect.texture
-	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	
-	# Match the exact dimensions of the original slot without distortion
-	preview.size = size
-	preview.position = -_at_position
-	
-	# Make the drag preview see-through
-	preview.modulate.a = 0.6
-	
-	var drag_container = Control.new()
-	drag_container.add_child(preview)
-	set_drag_preview(drag_container)
-	
-	if DragManager:
-		DragManager.start_drag(self)
-		
-	return self
 
 # ==========================================
 # DEDUCTION BUTTON SPAWNING

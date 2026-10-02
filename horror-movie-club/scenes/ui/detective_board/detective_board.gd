@@ -75,7 +75,7 @@ func can_drop_evidence(data: Variant) -> bool:
 ## Instantiates a physical EvidenceCard onto the board canvas at the specified mouse drop position.
 func drop_evidence(at_position: Vector2, data: Variant) -> void:
 	if data is TraySlot:
-		var evidence_id = data.get_evidence_id()
+		var evidence_id = data.get_card_id()
 		data.clear_slot()
 		
 		var new_card = evidence_card_scene.instantiate() as EvidenceCard
