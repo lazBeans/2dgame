@@ -10,14 +10,16 @@ signal slot_filled
 # ==========================================
 var current_ch = GameManager.current_chapter
 var ordered_segments = FileManager.load_required_segments(current_ch)
+var segment = preload("res://scenes/components/EventSegment.tscn")
 var _segment_id: String = ""
+var unordered_segments = []
 
-# @onready var label: Label = $Label
+@onready var spawn: Marker2D
 
 ## Placeholder initialization hook.
 func _ready() -> void:
+	#call_deferred("_connect_dialogic")
 	pass
-
 # ==========================================
 # PUZZLE COMPLETION FLOW
 # ==========================================
@@ -40,7 +42,20 @@ func _on_clue_dialogue_finished() -> void:
 # ==========================================
 # SEGMENT QUEUE HELPERS
 # ==========================================
-
+func _on_dialogic_signal(argument: Variant) -> void:
+	var arg_str = str(argument).strip_edges()
+	
+	if arg_str.begins_with("unlock_segment:"):
+		var segment_id = arg_str.get_slice(":", 1).strip_edges()
+		unordered_segments.append(segment_id)
+		
+		if ordered_segments.size() == unordered_segments.size():
+			for i in range(0, ordered_segments.size(), 1):
+				var event_segment = segment.instantiate()
+				event_segment.position = segment.position
+				get_parent().get_node("SpawnPoints").add_child(event_segment)
+				
+		
 ## Fetches required chapter segments from FileManager to set up deduction puzzles.
 func populate_segment_queue(ch: String) -> void:
 	pass

@@ -1,10 +1,11 @@
-## Script Purpose: Manages an individual event segment in the deduction scene, 
-## handling drag-and-drop movement, and dynamic label loading.
+## PURPOSE: Manages an individual event segment in the deduction scene, 
+## handling dynamic segment resource loading and chapter sequence validation.
 extends DetectiveCardBase
 class_name EventSegment
 
-signal event_segments
-
+# ==========================================
+# STATE VARIABLES & SETTERS
+# ==========================================
 var segment_identifier: String = "":
 	set(value):
 		segment_identifier = value
@@ -12,10 +13,40 @@ var segment_identifier: String = "":
 
 @onready var label: Label = $Label
 
-## Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass
+# ==========================================
+# DISPLAY & SETUP
+# ==========================================
 
+## Updates the card's text label based on the current segment identifier resource.
+func _update_segment_display() -> void:
+	if segment_identifier.is_empty():
+		return
+		
+	var resource_path = "res://resources/segment/" + segment_identifier + ".tres"
+	var segment_data = load(resource_path) as SegmentData
+	
+	if segment_data and label:
+		label.text = segment_data.evidence_name
+
+## Implements the abstract base method. Syncs card_identifier to segment_identifier 
+## and loads the correct segment resource data from the segment directory.
+func setup_card_visual() -> void:
+	segment_identifier = card_identifier
+	
+	var resource_path = "res://resources/segment/" + card_identifier + ".tres"
+	var segment_data = load(resource_path) as SegmentData
+	
+	if segment_data:
+		if label:
+			label.text = segment_data.evidence_name
+	else:
+		push_error("EventSegment: Failed to load SegmentData resource at path: " + resource_path)
+
+# ==========================================
+# PUZZLE & VALIDATION LOGIC
+# ==========================================
+
+## Validates if the given sequence matches the required chapter segments.
 func in_valid_order(segments: Array) -> bool:
 	var master_array = FileManager.load_required_segments(GameManager.current_chapter)
 	
@@ -24,29 +55,3 @@ func in_valid_order(segments: Array) -> bool:
 		return true
 	
 	return false
-	
-## Updates the card's text label based on the current evidence identifier resource.
-func _update_segment_display() -> void:
-	if segment_identifier.is_empty():
-		return
-	var resource_path = "res://resources/segment/" + segment_identifier + ".tres"
-	var segment_data = load(resource_path) as SegmentData
-	
-	if segment_data and label:
-		label.text = segment_data.evidence_name
-		
-## Sets up the card with a given evidence ID, loading both its image texture and title.
-func setup_card_visual() -> void:
-	var resource_path = "res://resources/evidence/" + card_identifier + ".tres"
-	var segment_data = load(resource_path) as SegmentData
-	
-	if segment_data:
-		if label:
-			label.text = segment_data.evidence_name
-	else:
-		push_error("EvidenceCard: Failed to load EvidenceData resource at path: " + resource_path)
-
-## Updates the card's global position smoothly while it is being dragged by the mouse.
-func _input(event: InputEvent) -> void:
-	if is_dragging and event is InputEventMouseMotion:
-		global_position = get_global_mouse_position() - drag_offset

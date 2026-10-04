@@ -1,6 +1,9 @@
 [gd_scene format=3 uid="uid://dul3uugv2roha"]
 
 [ext_resource type="Texture2D" uid="uid://laf6bwjl6kn3" path="res://assets/textures/deduction.png" id="1_h20no"]
+[ext_resource type="Script" uid="uid://dhg1slqnwe2am" path="res://scenes/components/unordered_slots.gd" id="2_teq53"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_limt6"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h20no"]
 
@@ -27,6 +30,43 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_h20no")
 
+[node name="SpawnPoints" type="Panel" parent="." unique_id=643189315]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxEmpty_limt6")
+script = ExtResource("2_teq53")
+
+[node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1339051390]
+position = Vector2(863, 240)
+
+[node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1433953731]
+position = Vector2(2900, 740)
+
+[node name="Spawn3" type="Marker2D" parent="SpawnPoints" unique_id=771451892]
+position = Vector2(307, 562)
+
+[node name="Spawn4" type="Marker2D" parent="SpawnPoints" unique_id=863333654]
+position = Vector2(3321, 1166)
+
+[node name="Spawn5" type="Marker2D" parent="SpawnPoints" unique_id=1672664328]
+position = Vector2(3131, 240)
+
+[node name="Spawn6" type="Marker2D" parent="SpawnPoints" unique_id=1592823411]
+position = Vector2(521, 1166)
+
+[node name="Spawn7" type="Marker2D" parent="SpawnPoints" unique_id=619910570]
+position = Vector2(2001, 1057)
+
+[node name="Spawn8" type="Marker2D" parent="SpawnPoints" unique_id=1639718625]
+position = Vector2(2203, 385)
+
+[node name="Spawn9" type="Marker2D" parent="SpawnPoints" unique_id=2079608501]
+position = Vector2(1281, 802)
+
 [node name="OrderedSlot" type="HBoxContainer" parent="." unique_id=797740360]
 layout_mode = 1
 anchors_preset = 8
@@ -47,6 +87,13 @@ custom_minimum_size = Vector2(640, 480)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
 
+[node name="TextureRect" type="TextureRect" parent="OrderedSlot/Slot1" unique_id=555353824]
+layout_mode = 0
+offset_left = 521.0
+offset_top = 42.0
+offset_right = 1217.0
+offset_bottom = 479.0
+
 [node name="Label" type="Label" parent="OrderedSlot/Slot1" unique_id=1090871774]
 layout_mode = 0
 offset_right = 40.0
@@ -56,6 +103,13 @@ offset_bottom = 23.0
 custom_minimum_size = Vector2(640, 480)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_teq53")
+
+[node name="TextureRect" type="TextureRect" parent="OrderedSlot/Slot2" unique_id=1183167317]
+layout_mode = 0
+offset_left = 521.0
+offset_top = 42.0
+offset_right = 1217.0
+offset_bottom = 479.0
 
 [node name="Label" type="Label" parent="OrderedSlot/Slot2" unique_id=314477126]
 layout_mode = 0
@@ -67,6 +121,13 @@ custom_minimum_size = Vector2(640, 480)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_j05r2")
 
+[node name="TextureRect" type="TextureRect" parent="OrderedSlot/Slot3" unique_id=1066119546]
+layout_mode = 0
+offset_left = 521.0
+offset_top = 42.0
+offset_right = 1217.0
+offset_bottom = 479.0
+
 [node name="Label" type="Label" parent="OrderedSlot/Slot3" unique_id=307889018]
 layout_mode = 0
 offset_right = 40.0
@@ -77,61 +138,14 @@ custom_minimum_size = Vector2(640, 480)
 layout_mode = 2
 theme_override_styles/panel = SubResource("StyleBoxEmpty_3rml2")
 
+[node name="TextureRect" type="TextureRect" parent="OrderedSlot/Slot4" unique_id=732847033]
+layout_mode = 0
+offset_left = 521.0
+offset_top = 42.0
+offset_right = 1217.0
+offset_bottom = 479.0
+
 [node name="Label" type="Label" parent="OrderedSlot/Slot4" unique_id=2123656989]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Event1" type="Panel" parent="." unique_id=675416272]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 0
-offset_left = 2989.0
-offset_top = 957.0
-offset_right = 3629.0
-offset_bottom = 1437.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="Event1" unique_id=1665599937]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Event2" type="Panel" parent="." unique_id=364825361]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 0
-offset_left = 2721.0
-offset_right = 3361.0
-offset_bottom = 480.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="Event2" unique_id=752975396]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Event3" type="Panel" parent="." unique_id=2073433887]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 0
-offset_left = 201.0
-offset_top = 934.0
-offset_right = 841.0
-offset_bottom = 1414.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="Event3" unique_id=798872624]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Event4" type="Panel" parent="." unique_id=379031247]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 0
-offset_left = 561.0
-offset_right = 1201.0
-offset_bottom = 480.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="Event4" unique_id=699134050]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0

@@ -1,5 +1,5 @@
 ## PURPOSE: Manages an individual evidence card on the detective board, 
-## handling free-form dragging on the board via DragManager, dynamic texture loading, 
+## handling free-form dragging via DragManager, dynamic evidence texture/label loading, 
 ## and pin click interactions used for drawing yarn connection threads.
 extends DetectiveCardBase
 class_name EvidenceCard
@@ -7,7 +7,7 @@ class_name EvidenceCard
 signal pin_clicked(card: EvidenceCard)
 
 # ==========================================
-# EXPORTED & STATE VARIABLES
+# STATE VARIABLES & SETTERS
 # ==========================================
 var evidence_identifier: String = "":
 	set(value):
@@ -19,7 +19,7 @@ var evidence_identifier: String = "":
 @onready var pin_button: TextureButton = $PinButton
 
 # ==========================================
-# INITIALIZATION
+# INITIALIZATION & SETUP
 # ==========================================
 
 ## Called when the node enters the scene tree for the first time.
@@ -27,11 +27,7 @@ func _ready() -> void:
 	if pin_button:
 		pin_button.pressed.connect(_on_pin_pressed)
 
-# ==========================================
-# DISPLAY & SETUP
-# ==========================================
-
-## Updates the card's text label based on the current evidence identifier resource.
+## Updates the card's text label based on current evidence identifiers.
 func _update_card_display() -> void:
 	if evidence_identifier.is_empty():
 		return
@@ -42,9 +38,13 @@ func _update_card_display() -> void:
 	if evidence_data and label:
 		label.text = evidence_data.evidence_name
 
-## Sets up the card with a given evidence ID, loading both its image texture and title.
+## Implements the abstract base method. Syncs card_identifier to evidence_identifier 
+## to ensure thread connections receive the correct ID, then loads textures and text.
 func setup_card_visual() -> void:
-	var resource_path = "res://resources/evidence/" + card_identifier + ".tres"
+	# Synchronize base identifier with the subclass property to fix thread connection routing
+	evidence_identifier = card_identifier
+	
+	var resource_path = "res://resources/evidence/" + evidence_identifier + ".tres"
 	var evidence_data = load(resource_path) as EvidenceData
 	
 	if evidence_data:
@@ -56,14 +56,16 @@ func setup_card_visual() -> void:
 		push_error("EvidenceCard: Failed to load Card resource at path: " + resource_path)
 
 # ==========================================
-# INPUT & DRAGGING BEHAVIOR
+# INPUT & DRAGGING OVERRIDES
 # ==========================================
 
+## Extends base drag behavior to hide pin interactions while moving.
 func start_dragging() -> void:
 	super()
 	if pin_button:
 		pin_button.visible = false
 
+## Restores pin visibility when dragging concludes.
 func stop_dragging() -> void:
 	super()
 	if pin_button:
@@ -73,7 +75,7 @@ func stop_dragging() -> void:
 # SIGNAL CALLBACKS
 # ==========================================
 
-## Handles pin button clicks, relaying the event to the ThreadContainer to create yarn connections.
+## Handles pin button clicks, passing the synchronized evidence identifier to the ThreadContainer.
 func _on_pin_pressed() -> void:
 	print("Pin clicked on evidence card: ", evidence_identifier)
 	

@@ -34,7 +34,7 @@ func _ready() -> void:
 	
 	# Configure the temporary line used when stretching yarn from a pin
 	temp_line = Line2D.new()
-	temp_line.width = 4.0
+	temp_line.width = 6.0
 	temp_line.default_color = Color("#e63946")
 	temp_line.antialiased = true
 	temp_line.z_index = 100

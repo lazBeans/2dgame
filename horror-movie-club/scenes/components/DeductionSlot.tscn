@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://cldvy583johq8"]
+
+[node name="DeductionSlot" type="Panel" unique_id=1534487244]
+
+[node name="TextureRect" type="TextureRect" parent="." unique_id=1963246]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Label" type="Label" parent="." unique_id=922437907]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 23.0

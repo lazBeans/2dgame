@@ -37,10 +37,13 @@ directories/dtl_directory={
 "timeline_ch1_scale_and_hoop": "res://timelines/timeline_ch1_scale_and_hoop.dtl",
 "timeline_ch1_what_went_missing": "res://timelines/timeline_ch1_what_went_missing.dtl"
 }
-layout/style_directory={}
+layout/style_directory={
+"": "res://timelines/demo.tres",
+"demo": "res://timelines/demo.tres"
+}
 glossary/default_case_sensitive=true
-layout/style_list=["res://timelines/test.tres"]
-layout/default_style="res://timelines/test.tres"
+layout/style_list=["res://timelines/demo.tres"]
+layout/default_style="res://timelines/demo.tres"
 variables={}
 text/letter_speed=0.01
 text/initial_text_reveal_skippable=true

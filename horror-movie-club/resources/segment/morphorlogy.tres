@@ -1,9 +1,13 @@
-[gd_resource type="Resource" script_class="Segment" format=3 uid="uid://dfj2su7yu3mc5"]
+[gd_resource type="Resource" script_class="SegmentData" format=3 uid="uid://dfj2su7yu3mc5"]
 
 [ext_resource type="Script" uid="uid://dtnt02ve6sjdo" path="res://resources/segment/segment_data.gd" id="1_s52m0"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_n4m3h"]
+load_path = "res://.godot/imported/notes.png-7500baade64739b6aea695ddd6b18b8d.ctex"
 
 [resource]
 script = ExtResource("1_s52m0")
 id = "morphorlogy"
 description = "It's a creature with scale and hoop. It looks like it was pawing the ground in this part of the botanical garden."
+texture = SubResource("CompressedTexture2D_n4m3h")
 metadata/_custom_type_script = "uid://dtnt02ve6sjdo"
