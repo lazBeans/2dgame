@@ -35,10 +35,21 @@ func _gui_input(event: InputEvent) -> void:
 		else:
 			stop_dragging()
 
-## Updates the card's global canvas position smoothly while being dragged by the mouse cursor.
+## Updates the card's global position smoothly while being dragged, keeping it inside container bounds.
 func _input(event: InputEvent) -> void:
 	if is_dragging and event is InputEventMouseMotion:
-		global_position = get_global_mouse_position() - drag_offset
+		var target_pos = get_global_mouse_position() - drag_offset
+		
+		# Get the parent board / margin container reference
+		var container = get_parent()
+		if container and container is Control:
+			var container_rect = container.get_global_rect()
+			
+			# Clamp target position to container edges minus card dimensions
+			target_pos.x = clamp(target_pos.x, container_rect.position.x, container_rect.position.x + container_rect.size.x - size.x)
+			target_pos.y = clamp(target_pos.y, container_rect.position.y, container_rect.position.y + container_rect.size.y - size.y)
+		
+		global_position = target_pos
 		
 ## Initiates the dragging sequence, caching offsets and moving the node to the top of its parent.
 func start_dragging() -> void:
@@ -54,5 +65,16 @@ func start_dragging() -> void:
 ## Concludes the dragging sequence and notifies the global DragManager.
 func stop_dragging() -> void:
 	is_dragging = false
-	if DragManager:
-		DragManager.end_drag(true)
+	_check_drop_on_slot()
+
+func _check_drop_on_slot() -> void:
+	var mouse_pos = get_global_mouse_position()
+	var slots = get_tree().get_nodes_in_group("ordered_slots")
+
+	for slot in slots:
+		if slot is Control and slot.is_visible_in_tree():
+			# Check exact global rectangle of this specific spawned slot
+			if slot.get_global_rect().has_point(mouse_pos):
+				if slot.has_method("_can_drop_data") and slot._can_drop_data(Vector2.ZERO, self):
+					slot._drop_data(Vector2.ZERO, self)
+					return

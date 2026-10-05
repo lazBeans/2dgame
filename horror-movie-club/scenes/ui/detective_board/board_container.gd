@@ -33,10 +33,21 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	if board_scene:
 		if data is TraySlot:
 			if board_scene.has_method("drop_evidence"):
+				# Use global mouse position directly to avoid any to_global() parse errors
 				board_scene.drop_evidence(get_global_mouse_position(), data)
 				
 		elif data is EvidenceCard:
-			data.global_position = get_global_mouse_position() - (data.size / 2.0)
+			var container_rect = get_global_rect()
+			var card_size = data.size if data.size != Vector2.ZERO else data.custom_minimum_size
+			
+			var global_drop_pos = get_global_mouse_position()
+			var target_pos = global_drop_pos - (card_size / 2.0)
+			
+			# Clamp within container bounds using pure global coordinates
+			target_pos.x = clamp(target_pos.x, container_rect.position.x, container_rect.position.x + container_rect.size.x - card_size.x)
+			target_pos.y = clamp(target_pos.y, container_rect.position.y, container_rect.position.y + container_rect.size.y - card_size.y)
+			
+			data.global_position = target_pos
 
 # ==========================================
 # HELPER FUNCTIONS

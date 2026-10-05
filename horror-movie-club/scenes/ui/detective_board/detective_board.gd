@@ -72,16 +72,28 @@ func update_tray() -> void:
 func can_drop_evidence(data: Variant) -> bool:
 	return data is TraySlot and not data.is_empty()
 
-## Instantiates a physical EvidenceCard onto the board canvas at the specified mouse drop position.
+## Instantiates a physical EvidenceCard onto the board canvas within container margins.
 func drop_evidence(at_position: Vector2, data: Variant) -> void:
 	if data is TraySlot:
-		var evidence_id = data.get_card_id()
+		var evidence_id = data.get_evidence_id()
 		data.clear_slot()
 		
 		var new_card = evidence_card_scene.instantiate() as EvidenceCard
 		if new_card:
 			board_container.add_child(new_card)
-			new_card.global_position = at_position - (new_card.size / 2)
+			
+			# Ensure accurate card dimensions
+			var card_size = new_card.size if new_card.size != Vector2.ZERO else new_card.custom_minimum_size
+			
+			# Get the global rectangle of the board container area
+			var container_rect = board_container.get_global_rect()
+			var spawn_pos = at_position - (card_size / 2.0)
+			
+			# Clamp the spawn position strictly within the MarginContainer bounds
+			spawn_pos.x = clamp(spawn_pos.x, container_rect.position.x, container_rect.position.x + container_rect.size.x - card_size.x)
+			spawn_pos.y = clamp(spawn_pos.y, container_rect.position.y, container_rect.position.y + container_rect.size.y - card_size.y)
+			
+			new_card.global_position = spawn_pos
 			new_card.setup(evidence_id)
 
 ## Wipes all evidence cards from the board workspace and clears lines/tray state.

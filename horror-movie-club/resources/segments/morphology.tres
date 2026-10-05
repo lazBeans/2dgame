@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3 uid="uid://dfj2su7yu3mc5"]
+
+[ext_resource type="Script" uid="uid://dtnt02ve6sjdo" path="res://resources/segments/segment_data.gd" id="1_d1h3o"]
+
+[resource]
+script = ExtResource("1_d1h3o")
+id = "morphorlogy"
+description = "It's a creature with scale and hoop. It looks like it was pawing the ground in this part of the botanical garden."
+metadata/_custom_type_script = "uid://dtnt02ve6sjdo"

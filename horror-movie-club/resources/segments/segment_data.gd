@@ -1,4 +1,4 @@
-# res://scripts/resources/Segment.gd
+# res://scripts/resources/Segments.gd
 extends Resource
 class_name SegmentData
 

@@ -1,74 +1,67 @@
-## PURPOSE: Manages the inventory tray slot where new evidence items arrive.
-## Handles holding current evidence data, integration with DragManager for payload delivery,
-## and spawning the final deduction trigger button when a chapter is solved.
+## PURPOSE: Manages inventory tray slots for receiving evidence and spawning deduction triggers.
+## Extends DetectiveSlotBase to inherit drag-and-drop state & method overrides.
 extends DetectiveSlotBase
 class_name TraySlot
 
-signal slot_filled(evidence_id: String)
 signal deduction_button_pressed
 
-# ==========================================
-# STATE & EXPORT VARIABLES
-# ==========================================
-
+@export var deduction_button_scene: PackedScene
 var active_button: Node = null
 
-@export var deduction_button_scene: PackedScene
-
-# ==========================================
-# INITIALIZATION & CURSOR FIXES
-# ==========================================
-
-## Clears the tray slot on startup.
 func _ready() -> void:
 	clear_slot()
 
-# ==========================================
-# EVIDENCE SETUP & CLEARING
-# ==========================================
+func _process(_delta: float) -> void:
+	if Input.get_current_cursor_shape() == CURSOR_FORBIDDEN:
+		DisplayServer.cursor_set_shape(DisplayServer.CURSOR_ARROW)
 
-## Alias wrapper to assign evidence to the tray slot.
-func set_evidence(id: String) -> void:
-	setup_tray_item(id)
-
-## Loads evidence resource data and populates the tray graphics (texture and label).
-func setup_tray_item(id: String) -> void:
+## Populates the tray slot and loads evidence graphics & labels from resources.
+func set_slot_item(id: String) -> void:
 	super(id)
-	var resource_path = "res://resources/evidence/" + _card_id + ".tres"
-	var evidence_data = load(resource_path) as EvidenceData
-	
-	if evidence_data:
-		if texture_rect:
-			texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-			texture_rect.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
-			texture_rect.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
-			if evidence_data.texture:
-				texture_rect.texture = evidence_data.texture 
-		if label:
-			label.text = evidence_data.evidence_name
-			label.visible = true
-		visible = true
-		slot_filled.emit(_card_id)
-	else:
+
+	if current_item_id.is_empty():
 		clear_slot()
+		return
 
-# ==========================================
-# DEDUCTION BUTTON SPAWNING
-# ==========================================
-
-## Instantiates and attaches the final deduction button to the tray area when puzzle requirements are met.
-func spawn_deduction_button() -> void:
-	var button_scene = preload("res://scenes/components/DeductionButton.tscn")
-	var button_instance = button_scene.instantiate()
-	add_child(button_instance)
-	
-	if button_instance is Button:
-		button_instance.pressed.connect(_on_deduction_pressed)
+	var resource_path := "res://resources/evidences/" + current_item_id + ".tres"
+	if ResourceLoader.exists(resource_path):
+		var evidence_data = load(resource_path)
+		if evidence_data:
+			if texture_rect:
+				texture_rect.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+				texture_rect.size_flags_horizontal = Control.SIZE_EXPAND | Control.SIZE_FILL
+				texture_rect.size_flags_vertical = Control.SIZE_EXPAND | Control.SIZE_FILL
+				if "texture" in evidence_data and evidence_data.texture:
+					texture_rect.texture = evidence_data.texture
+			if label:
+				if "evidence_name" in evidence_data:
+					label.text = evidence_data.evidence_name
+				label.visible = true
+			visible = true
 	else:
-		var actual_button = button_instance.get_node("Button")
-		actual_button.pressed.connect(_on_deduction_pressed)
+		push_warning("TraySlot: Could not find evidence resource at path: " + resource_path)
 
-## Emits a signal when the deduction button is clicked.
+## Instantiates and attaches the deduction button inside the tray slot when conditions are met.
+func spawn_deduction_button() -> void:
+	if not deduction_button_scene:
+		deduction_button_scene = preload("res://scenes/components/DeductionButton.tscn") as PackedScene
+
+	if deduction_button_scene and (not active_button or not is_instance_valid(active_button)):
+		clear_slot()
+		active_button = deduction_button_scene.instantiate()
+		add_child(active_button)
+
+		if active_button is Control:
+			active_button.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+
+		var btn: Button = null
+		if active_button is Button:
+			btn = active_button
+		elif active_button.has_node("Button"):
+			btn = active_button.get_node("Button") as Button
+
+		if btn and not btn.pressed.is_connected(_on_deduction_pressed):
+			btn.pressed.connect(_on_deduction_pressed)
+
 func _on_deduction_pressed() -> void:
-	print("DEBUG: Deduction button was physically clicked!")
 	deduction_button_pressed.emit()

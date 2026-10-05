@@ -7,6 +7,7 @@ extends Node
 # GLOBAL STATE VARIABLES
 # ==========================================
 var pending_evidence_queue: Array[String] = []
+var unlocked_segments: Array[String] = []
 var current_chapter: String = "chapter_1"
 
 # ==========================================
@@ -38,6 +39,11 @@ func _on_dialogic_signal(argument: Variant) -> void:
 		pending_evidence_queue.append(evidence_id)
 		if SignalBus.has_user_signal("evidence_queued"):
 			SignalBus.evidence_queued.emit(evidence_id)
+			
+	elif arg_str.begins_with("unlock_segment:"):
+		var segment_id = arg_str.get_slice(":", 1).strip_edges()
+		if not unlocked_segments.has(segment_id):
+			unlocked_segments.append(segment_id)
 			
 	# Handles transitioning to a new scene using keys defined in scenes.json
 	elif arg_str.begins_with("change-scene:") or arg_str.begins_with("change_scene:"):

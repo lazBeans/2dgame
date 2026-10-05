@@ -32,7 +32,7 @@ func _update_card_display() -> void:
 	if evidence_identifier.is_empty():
 		return
 		
-	var resource_path = "res://resources/evidence/" + evidence_identifier + ".tres"
+	var resource_path = "res://resources/evidences/" + evidence_identifier + ".tres"
 	var evidence_data = load(resource_path) as EvidenceData
 	
 	if evidence_data and label:
@@ -44,7 +44,7 @@ func setup_card_visual() -> void:
 	# Synchronize base identifier with the subclass property to fix thread connection routing
 	evidence_identifier = card_identifier
 	
-	var resource_path = "res://resources/evidence/" + evidence_identifier + ".tres"
+	var resource_path = "res://resources/evidences/" + evidence_identifier + ".tres"
 	var evidence_data = load(resource_path) as EvidenceData
 	
 	if evidence_data:

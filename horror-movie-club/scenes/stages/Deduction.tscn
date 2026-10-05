@@ -1,28 +1,14 @@
 [gd_scene format=3 uid="uid://dul3uugv2roha"]
 
 [ext_resource type="Texture2D" uid="uid://laf6bwjl6kn3" path="res://assets/textures/deduction.png" id="1_h20no"]
-[ext_resource type="Script" uid="uid://dhg1slqnwe2am" path="res://scenes/components/unordered_slots.gd" id="2_teq53"]
+[ext_resource type="Script" uid="uid://cj6gibfq7eahv" path="res://autoloads/deduction_manager.gd" id="1_teq53"]
+[ext_resource type="PackedScene" uid="uid://dey4ibvtnf0na" path="res://scenes/components/OrderedSlot.tscn" id="2_3rml2"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_limt6"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h20no"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_teq53"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j05r2"]
-
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3rml2"]
-
-[node name="Deduction" type="Control" unique_id=179710515]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="Deduction" type="Node" unique_id=2039921518]
+script = ExtResource("1_teq53")
+slot_scene = ExtResource("2_3rml2")
 
 [node name="Background" type="TextureRect" parent="." unique_id=2106629062]
-layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -30,122 +16,44 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_h20no")
 
-[node name="SpawnPoints" type="Panel" parent="." unique_id=643189315]
-layout_mode = 1
-anchors_preset = 15
+[node name="OrderedSlot" type="HBoxContainer" parent="." unique_id=797740360]
+custom_minimum_size = Vector2(3840, 790)
+anchors_preset = 12
+anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_top = -790.0
 grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_limt6")
-script = ExtResource("2_teq53")
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
 
-[node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1339051390]
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=635503487]
+
+[node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1339051390 groups=["spawn_points"]]
 position = Vector2(863, 240)
 
-[node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1433953731]
-position = Vector2(2900, 740)
+[node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1433953731 groups=["spawn_points"]]
+position = Vector2(3062, 684)
 
-[node name="Spawn3" type="Marker2D" parent="SpawnPoints" unique_id=771451892]
-position = Vector2(307, 562)
+[node name="Spawn3" type="Marker2D" parent="SpawnPoints" unique_id=771451892 groups=["spawn_points"]]
+position = Vector2(665, 596)
 
-[node name="Spawn4" type="Marker2D" parent="SpawnPoints" unique_id=863333654]
-position = Vector2(3321, 1166)
+[node name="Spawn4" type="Marker2D" parent="SpawnPoints" unique_id=863333654 groups=["spawn_points"]]
+position = Vector2(3202, 1166)
 
-[node name="Spawn5" type="Marker2D" parent="SpawnPoints" unique_id=1672664328]
-position = Vector2(3131, 240)
+[node name="Spawn5" type="Marker2D" parent="SpawnPoints" unique_id=1672664328 groups=["spawn_points"]]
+position = Vector2(2900, 296)
 
-[node name="Spawn6" type="Marker2D" parent="SpawnPoints" unique_id=1592823411]
-position = Vector2(521, 1166)
+[node name="Spawn6" type="Marker2D" parent="SpawnPoints" unique_id=1592823411 groups=["spawn_points"]]
+position = Vector2(521, 1057)
 
-[node name="Spawn7" type="Marker2D" parent="SpawnPoints" unique_id=619910570]
-position = Vector2(2001, 1057)
+[node name="Spawn7" type="Marker2D" parent="SpawnPoints" unique_id=619910570 groups=["spawn_points"]]
+position = Vector2(2001, 802)
 
-[node name="Spawn8" type="Marker2D" parent="SpawnPoints" unique_id=1639718625]
+[node name="Spawn8" type="Marker2D" parent="SpawnPoints" unique_id=1639718625 groups=["spawn_points"]]
 position = Vector2(2203, 385)
 
-[node name="Spawn9" type="Marker2D" parent="SpawnPoints" unique_id=2079608501]
+[node name="Spawn9" type="Marker2D" parent="SpawnPoints" unique_id=2079608501 groups=["spawn_points"]]
 position = Vector2(1281, 802)
-
-[node name="OrderedSlot" type="HBoxContainer" parent="." unique_id=797740360]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1399.0
-offset_top = 429.0
-offset_right = 1401.0
-offset_bottom = 909.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 80
-
-[node name="Slot1" type="Panel" parent="OrderedSlot" unique_id=648292342]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="TextureRect" type="TextureRect" parent="OrderedSlot/Slot1" unique_id=555353824]
-layout_mode = 0
-offset_left = 521.0
-offset_top = 42.0
-offset_right = 1217.0
-offset_bottom = 479.0
-
-[node name="Label" type="Label" parent="OrderedSlot/Slot1" unique_id=1090871774]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Slot2" type="Panel" parent="OrderedSlot" unique_id=796500401]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_teq53")
-
-[node name="TextureRect" type="TextureRect" parent="OrderedSlot/Slot2" unique_id=1183167317]
-layout_mode = 0
-offset_left = 521.0
-offset_top = 42.0
-offset_right = 1217.0
-offset_bottom = 479.0
-
-[node name="Label" type="Label" parent="OrderedSlot/Slot2" unique_id=314477126]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Slot3" type="Panel" parent="OrderedSlot" unique_id=115388131]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_j05r2")
-
-[node name="TextureRect" type="TextureRect" parent="OrderedSlot/Slot3" unique_id=1066119546]
-layout_mode = 0
-offset_left = 521.0
-offset_top = 42.0
-offset_right = 1217.0
-offset_bottom = 479.0
-
-[node name="Label" type="Label" parent="OrderedSlot/Slot3" unique_id=307889018]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Slot4" type="Panel" parent="OrderedSlot" unique_id=1585709560]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_3rml2")
-
-[node name="TextureRect" type="TextureRect" parent="OrderedSlot/Slot4" unique_id=732847033]
-layout_mode = 0
-offset_left = 521.0
-offset_top = 42.0
-offset_right = 1217.0
-offset_bottom = 479.0
-
-[node name="Label" type="Label" parent="OrderedSlot/Slot4" unique_id=2123656989]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0

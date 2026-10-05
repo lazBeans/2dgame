@@ -1,0 +1,129 @@
+[gd_scene format=3 uid="uid://dul3uugv2roha"]
+
+[ext_resource type="Texture2D" uid="uid://laf6bwjl6kn3" path="res://assets/textures/deduction.png" id="1_h20no"]
+[ext_resource type="Script" uid="uid://cj6gibfq7eahv" path="res://autoloads/deduction_manager.gd" id="1_teq53"]
+[ext_resource type="PackedScene" uid="uid://dey4ibvtnf0na" path="res://scenes/components/OrderedSlot.tscn" id="2_3rml2"]
+
+[sub_resource type="GDScript" id="GDScript_j05r2"]
+script/source = "extends Control
+class_name OrderedSlot
+
+signal slot_filled(card_id: String)
+signal slot_emptied
+
+@export var slot_index: int = 0
+var current_card_id: String = \"\"
+
+func _ready() -> void:
+	# Add each individual slot to the group so drag checks can find its specific bounds
+	add_to_group(\"ordered_slots\")
+
+func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
+	return data is Control and (\"segment_identifier\" in data or data.has_method(\"get_segment_id\") or data.has_method(\"get_item_id\"))
+
+func _drop_data(_at_position: Vector2, data: Variant) -> void:
+	if not _can_drop_data(_at_position, data):
+		return
+
+	if \"is_dragging\" in data:
+		data.is_dragging = false
+
+	# Extract card ID
+	var incoming_id: String = \"\"
+	if \"segment_identifier\" in data:
+		incoming_id = str(data.segment_identifier)
+	elif data.has_method(\"get_segment_id\"):
+		incoming_id = data.get_segment_id()
+	elif data.has_method(\"get_item_id\"):
+		incoming_id = data.get_item_id()
+
+	# Return existing card in this slot back to pool if swapped
+	for child in get_children():
+		if child is Control and child != data and (\"segment_identifier\" in child or child.has_method(\"get_segment_id\")):
+			remove_child(child)
+			var pool = get_tree().get_first_node_in_group(\"segment_pool\")
+			if pool:
+				pool.add_child(child)
+			else:
+				get_tree().current_scene.add_child(child)
+			slot_emptied.emit()
+			break
+
+	# Reparent card into THIS specific slot instance
+	if data.get_parent():
+		data.get_parent().remove_child(data)
+
+	add_child(data)
+
+	# Center card inside this slot frame
+	if data is Control:
+		data.set_anchors_preset(Control.PRESET_TOP_LEFT)
+		data.position = (size - data.size) / 2.0
+
+	current_card_id = incoming_id
+	slot_filled.emit(current_card_id)
+	print(\"Slot \", slot_index, \" successfully received card ID: \", current_card_id)
+
+func get_item_id() -> String:
+	return current_card_id
+"
+
+[node name="Deduction" type="Node" unique_id=2039921518]
+script = ExtResource("1_teq53")
+slot_scene = ExtResource("2_3rml2")
+
+[node name="Background" type="TextureRect" parent="." unique_id=2106629062]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_h20no")
+
+[node name="OrderedSlot" type="HBoxContainer" parent="." unique_id=797740360]
+custom_minimum_size = Vector2(3840, 790)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -790.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+metadata/_edit_use_anchors_ = true
+
+[node name="Slot" parent="OrderedSlot" unique_id=495537466 instance=ExtResource("2_3rml2")]
+layout_mode = 2
+mouse_filter = 2
+script = SubResource("GDScript_j05r2")
+slot_index = null
+
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=635503487]
+
+[node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1339051390 groups=["spawn_points"]]
+position = Vector2(863, 240)
+
+[node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1433953731 groups=["spawn_points"]]
+position = Vector2(3062, 684)
+
+[node name="Spawn3" type="Marker2D" parent="SpawnPoints" unique_id=771451892 groups=["spawn_points"]]
+position = Vector2(665, 596)
+
+[node name="Spawn4" type="Marker2D" parent="SpawnPoints" unique_id=863333654 groups=["spawn_points"]]
+position = Vector2(3202, 1166)
+
+[node name="Spawn5" type="Marker2D" parent="SpawnPoints" unique_id=1672664328 groups=["spawn_points"]]
+position = Vector2(2900, 296)
+
+[node name="Spawn6" type="Marker2D" parent="SpawnPoints" unique_id=1592823411 groups=["spawn_points"]]
+position = Vector2(521, 1057)
+
+[node name="Spawn7" type="Marker2D" parent="SpawnPoints" unique_id=619910570 groups=["spawn_points"]]
+position = Vector2(2001, 802)
+
+[node name="Spawn8" type="Marker2D" parent="SpawnPoints" unique_id=1639718625 groups=["spawn_points"]]
+position = Vector2(2203, 385)
+
+[node name="Spawn9" type="Marker2D" parent="SpawnPoints" unique_id=2079608501 groups=["spawn_points"]]
+position = Vector2(1281, 802)

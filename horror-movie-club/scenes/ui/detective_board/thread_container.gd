@@ -34,7 +34,7 @@ func _ready() -> void:
 	
 	# Configure the temporary line used when stretching yarn from a pin
 	temp_line = Line2D.new()
-	temp_line.width = 6.0
+	temp_line.width = 4.0
 	temp_line.default_color = Color("#e63946")
 	temp_line.antialiased = true
 	temp_line.z_index = 100
@@ -47,12 +47,12 @@ func _ready() -> void:
 
 ## Updates line positions every frame to follow mouse drags or moving evidence cards.
 func _process(_delta: float) -> void:
-	# Update the temporary dragging line to follow the cursor
+	# Update the temporary dragging line to follow the cursor using local coordinates
 	if visible and selected_pins.size() == 1 and temp_line:
 		var anchor_pin = selected_pins[0]["pin"] as Control
 		if is_instance_valid(anchor_pin):
-			var start_pos = anchor_pin.get_global_rect().get_center()
-			var mouse_pos = get_viewport().get_mouse_position()
+			var start_pos = line_parent.to_local(anchor_pin.get_global_rect().get_center())
+			var mouse_pos = line_parent.to_local(get_viewport().get_mouse_position())
 			temp_line.set_point_position(0, start_pos)
 			temp_line.set_point_position(1, mouse_pos)
 			
@@ -70,8 +70,8 @@ func _process(_delta: float) -> void:
 					item["line"].visible = false
 				else:
 					item["line"].visible = true
-					item["line"].set_point_position(0, item["pin_a"].get_global_rect().get_center())
-					item["line"].set_point_position(1, item["pin_b"].get_global_rect().get_center())
+					item["line"].set_point_position(0, line_parent.to_local(item["pin_a"].get_global_rect().get_center()))
+					item["line"].set_point_position(1, line_parent.to_local(item["pin_b"].get_global_rect().get_center()))
 			else:
 				item["line"].queue_free()
 				permanent_lines.remove_at(i)
@@ -89,7 +89,7 @@ func _on_pin_clicked(card_id: String, pin_node: Control) -> void:
 		selected_pins.append({"id": card_id, "pin": pin_node})
 		if temp_line:
 			temp_line.visible = true
-			var start_pos = pin_node.get_global_rect().get_center()
+			var start_pos = line_parent.to_local(pin_node.get_global_rect().get_center())
 			temp_line.clear_points()
 			temp_line.add_point(start_pos)
 			temp_line.add_point(start_pos)
@@ -137,8 +137,8 @@ func spawn_permanent_line(pin_a: Control, pin_b: Control) -> void:
 	perm_line.antialiased = true
 	perm_line.z_index = 1 
 	
-	var start_pos = pin_a.get_global_rect().get_center()
-	var end_pos = pin_b.get_global_rect().get_center()
+	var start_pos = line_parent.to_local(pin_a.get_global_rect().get_center())
+	var end_pos = line_parent.to_local(pin_b.get_global_rect().get_center())
 	
 	perm_line.add_point(start_pos)
 	perm_line.add_point(end_pos)

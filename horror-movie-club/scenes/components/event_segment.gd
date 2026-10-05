@@ -11,8 +11,6 @@ var segment_identifier: String = "":
 		segment_identifier = value
 		_update_segment_display()
 
-@onready var label: Label = $Label
-
 # ==========================================
 # DISPLAY & SETUP
 # ==========================================
@@ -22,23 +20,25 @@ func _update_segment_display() -> void:
 	if segment_identifier.is_empty():
 		return
 		
-	var resource_path = "res://resources/segment/" + segment_identifier + ".tres"
+	var resource_path = "res://resources/segments/" + segment_identifier + ".tres"
 	var segment_data = load(resource_path) as SegmentData
 	
-	if segment_data and label:
-		label.text = segment_data.evidence_name
+	if segment_data and has_node("EventDescription"):
+		$EventDescription.text = segment_data.description
 
 ## Implements the abstract base method. Syncs card_identifier to segment_identifier 
 ## and loads the correct segment resource data from the segment directory.
 func setup_card_visual() -> void:
 	segment_identifier = card_identifier
 	
-	var resource_path = "res://resources/segment/" + card_identifier + ".tres"
+	var resource_path = "res://resources/segments/" + card_identifier + ".tres"
 	var segment_data = load(resource_path) as SegmentData
 	
 	if segment_data:
-		if label:
-			label.text = segment_data.evidence_name
+		if has_node("EventDescription"):
+			$EventDescription.text = segment_data.description
+		if has_node("TextureRect") and segment_data.texture:
+			$TextureRect.texture = segment_data.texture
 	else:
 		push_error("EventSegment: Failed to load SegmentData resource at path: " + resource_path)
 
