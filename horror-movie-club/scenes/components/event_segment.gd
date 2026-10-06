@@ -34,16 +34,20 @@ func setup(id: String) -> void:
 func _update_segment_display() -> void:
 	if segment_identifier.is_empty():
 		return
-		
-	# Ensure this path string matches your FileSystem directory exactly:
-	var resource_path: String = "res://resources/segments/" + segment_identifier + ".tres"
 	
-	if ResourceLoader.exists(resource_path):
-		var segment_data: Resource = load(resource_path)
-		if segment_data:
-			if background and "texture" in segment_data and segment_data.texture:
-				background.texture = segment_data.texture
-			if label and "description" in segment_data:
-				label.text = segment_data.description
-	else:
-		push_error("EventSegment: Failed to load resource at: " + resource_path)
+	if FileManager.load_required_segments(GameManager.current_chapter):
+		var options: Array = FileManager.load_required_segments(GameManager.current_chapter).get(segment_identifier)
+		if options:
+			for i in range(options.size()):
+				# Ensure this path string matches your FileSystem directory exactly:
+				var resource_path: String = "res://resources/segments/" + options[i] + ".tres"
+				
+				if ResourceLoader.exists(resource_path):
+					var segment_data: Resource = load(resource_path)
+					if segment_data:
+						if background and "texture" in segment_data and segment_data.texture:
+							background.texture = segment_data.texture
+						if label and "description" in segment_data:
+							label.text = segment_data.description
+				else:
+					push_error("EventSegment: Failed to load resource at: " + resource_path)

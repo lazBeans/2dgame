@@ -1,6 +1,6 @@
 {
 	"chapter_1":{ 
-			"morphology1" : "morphology2",
-			"diet1" : "diet2"
+			"morphology" : ["morphology1", "morphology2"],
+			"diet" : ["diet1", "diet2"]
 	}
 }

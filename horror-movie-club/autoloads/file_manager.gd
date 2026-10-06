@@ -70,7 +70,7 @@ func load_scene(scene: String) -> String:
 	return ""
 
 ## Retrieves the required deduction segments for a specific chapter key.
-func load_required_segments(chapter_key: String) -> Array:
+func load_required_segments(chapter_key: String) -> Dictionary:
 	if deduction_master_data.has(chapter_key):
 		return deduction_master_data[chapter_key]
-	return []
+	return {}

@@ -13,13 +13,14 @@ extends Node
 var current_ch: String = GameManager.current_chapter
 
 ## Array of required event segment IDs for the current chapter sequence.
-var ordered_segments: Array = FileManager.load_required_segments(current_ch)
+var master_segments: Dictionary = FileManager.load_required_segments(current_ch)
+var master_event: Array = []
 
 ## Preloaded EventSegment scene used for instantiation.
 var segment: PackedScene = preload("res://scenes/components/EventSegment.tscn")
 
 ## Unordered segment identifiers available to be spawned on the board.
-var unordered_segments: Array = []
+var options: Array = []
 
 ## Array of Marker2D or Node spawn point locations found in the scene tree.
 var spawns: Array = []
@@ -40,18 +41,15 @@ func initialize_deduction() -> void:
 		spawns = spawn_container.get_children()
 	else:
 		spawns = get_tree().get_nodes_in_group("spawn_points")
-		
-	# 2. Shuffle spawn point locations
-	spawns.shuffle()
 	
 	# 3. Grab unlocked segments from GameManager
 	if "unlocked_segments" in GameManager:
 		for seg_id in GameManager.unlocked_segments:
-			if not unordered_segments.has(seg_id):
-				unordered_segments.append(seg_id)
+			if not options.has(seg_id):
+				options.append(seg_id)
 	
 	# 4. Spawn cards onto the board canvas
-	if not unordered_segments.is_empty():
+	if not options.is_empty():
 		_spawn_all_segments()
 
 # ==========================================
@@ -83,7 +81,7 @@ func _find_target_node(node_name: String) -> Node:
 ## Instantiates and places EventSegment instances at available spawn points.
 func _spawn_all_segments() -> void:
 	print("--- SPAWN DEBUG START ---")
-	print("Unordered Segments to spawn: ", unordered_segments.size())
+	print("Unordered Segments to spawn: ", options.size())
 	print("Spawn Markers found: ", spawns.size())
 
 	if segment == null:
@@ -93,8 +91,8 @@ func _spawn_all_segments() -> void:
 	var spawn_parent = _find_target_node("SpawnPoints")
 	var parent_to_use = spawn_parent if spawn_parent else get_tree().current_scene
 
-	for i in range(min(unordered_segments.size(), spawns.size())):
-		print("Spawning segment ", i, " with ID: ", unordered_segments[i])
+	for i in range(min(options.size(), spawns.size())):
+		print("Spawning segment ", i, " with ID: ", options[i])
 		
 		# 1. Instantiate without strict type-casting that can resolve to null
 		var event_segment = segment.instantiate()
@@ -114,7 +112,7 @@ func _spawn_all_segments() -> void:
 		
 		# 4. Initialize card data
 		if event_segment.has_method("setup"):
-			event_segment.setup(unordered_segments[i])
+			event_segment.setup(options[i])
 			
 	print("--- SPAWN DEBUG END ---")
 

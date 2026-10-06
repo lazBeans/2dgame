@@ -9,7 +9,7 @@ class_name ThreadContainer
 
 var selected_pins: Array = []
 var active_connections: Array = []
-var required_segments: Array = []
+var required_segments: Dictionary = {}
 var valid_connections: Dictionary = {}
 
 var line_parent: Node2D
