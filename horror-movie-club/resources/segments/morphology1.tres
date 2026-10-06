@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SegmentData" format=3 uid="uid://j44ltpyjulfj"]
+
+[ext_resource type="Script" uid="uid://dtnt02ve6sjdo" path="res://resources/segments/segment_data.gd" id="1_g83cb"]
+
+[resource]
+script = ExtResource("1_g83cb")
+id = "morphorlogy1"
+description = "Wrong Option"
+metadata/_custom_type_script = "uid://dtnt02ve6sjdo"

@@ -1,80 +1,93 @@
-## PURPOSE: Abstract base class for all interactive board items (EvidenceCards, EventSegments).
-## Manages shared polymorphic initialization, z-indexing, and global mouse-dragging mechanics.
-@abstract
-extends Panel
+## PURPOSE: Abstract base class for Area2D interactive detective board cards/segments.
+## Manages mouse dragging mechanics, spatial depth re-ordering, and target drop-zone detection.
+extends Area2D
 class_name DetectiveCardBase
 
-var card_identifier: String = ""
+# ==========================================
+# STATE & NODE REFERENCES
+# ==========================================
+
+## Indicates whether the card is currently being dragged by the mouse.
 var is_dragging: bool = false
+
+## Positional offset between the cursor position and the card's origin upon drag start.
 var drag_offset: Vector2 = Vector2.ZERO
 
-# ==========================================
-# POLYMORPHIC INITIALIZATION
-# ==========================================
-
-## Core setup method called externally. Caches the item ID and 
-## delegates specific visual configuration to the extended subclass.
-func setup(id: String) -> void:
-	card_identifier = id
-	setup_card_visual()
-
-## Abstract method enforced in Godot 4.5+. Subclasses must implement 
-## their own resource path loading and label/texture assignments here.
-@abstract func setup_card_visual() -> void
+@onready var collision_shape: CollisionShape2D = $CollisionShape2D
 
 # ==========================================
-# INPUT & DRAGGING BEHAVIOR
+# INITIALIZATION & INPUT PROCESSING
 # ==========================================
 
-## Handles mouse button input events to toggle dragging state, notify DragManager, 
-## and bring the active card to the foreground layer.
-func _gui_input(event: InputEvent) -> void:
+## Enables input pickable state on ready.
+func _ready() -> void:
+	input_pickable = true
+
+## Detects left-click mouse inputs on the Area2D collision shape to initiate dragging.
+func _input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if event.pressed:
 			start_dragging()
-		else:
-			stop_dragging()
 
-## Updates the card's global position smoothly while being dragged, keeping it inside container bounds.
+## Updates global position during mouse motion and handles release triggers while dragging.
 func _input(event: InputEvent) -> void:
-	if is_dragging and event is InputEventMouseMotion:
-		var target_pos = get_global_mouse_position() - drag_offset
-		
-		# Get the parent board / margin container reference
-		var container = get_parent()
-		if container and container is Control:
-			var container_rect = container.get_global_rect()
-			
-			# Clamp target position to container edges minus card dimensions
-			target_pos.x = clamp(target_pos.x, container_rect.position.x, container_rect.position.x + container_rect.size.x - size.x)
-			target_pos.y = clamp(target_pos.y, container_rect.position.y, container_rect.position.y + container_rect.size.y - size.y)
-		
-		global_position = target_pos
-		
-## Initiates the dragging sequence, caching offsets and moving the node to the top of its parent.
+	if not is_dragging:
+		return
+
+	if event is InputEventMouseMotion:
+		global_position = get_global_mouse_position() - drag_offset
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and not event.pressed:
+		stop_dragging()
+
+# ==========================================
+# DRAGGING & DROP LOGIC
+# ==========================================
+
+## Initiates dragging state and moves the node to the front of its parent rendering order.
 func start_dragging() -> void:
 	is_dragging = true
-	drag_offset = get_local_mouse_position()
-	if DragManager:
-		DragManager.start_drag(self)
-		
-	var parent_node = get_parent()
+	drag_offset = get_global_mouse_position() - global_position
+	
+	var parent_node: Node = get_parent()
 	if parent_node:
 		parent_node.move_child(self, parent_node.get_child_count() - 1)
 
-## Concludes the dragging sequence and notifies the global DragManager.
+## Ends dragging state and queries for slot or board container drop targets.
 func stop_dragging() -> void:
 	is_dragging = false
-	_check_drop_on_slot()
-
-func _check_drop_on_slot() -> void:
-	var mouse_pos = get_global_mouse_position()
-	var slots = get_tree().get_nodes_in_group("ordered_slots")
-
+	
+	# 1. Check UI Control slots first
+	var slots: Array[Node] = get_tree().get_nodes_in_group("slots")
 	for slot in slots:
 		if slot is Control and slot.is_visible_in_tree():
-			# Check exact global rectangle of this specific spawned slot
-			if slot.get_global_rect().has_point(mouse_pos):
-				if slot.has_method("_can_drop_data") and slot._can_drop_data(Vector2.ZERO, self):
-					slot._drop_data(Vector2.ZERO, self)
+			if slot.get_global_rect().has_point(get_global_mouse_position()):
+				if slot.has_method("receive_card"):
+					slot.receive_card(self)
+					return
+
+	# 2. Fall back to dropping onto the primary workspace board container
+	var board: Node = get_tree().get_first_node_in_group("board_container")
+	if board and board.has_method("drop_card_on_board"):
+		board.drop_card_on_board(self, global_position)
+
+# ==========================================
+# DROP TARGET DETECTION
+# ==========================================
+
+## Checks overlapping areas or UI drop rectangles on release.
+func _check_drop_targets() -> void:
+	# 1. Check overlapping Area2D target regions
+	var overlapping_areas: Array[Area2D] = get_overlapping_areas()
+	for area in overlapping_areas:
+		if area.has_method("receive_card"):
+			area.receive_card(self)
+			return
+
+	# 2. Check UI Control slots
+	var slots: Array[Node] = get_tree().get_nodes_in_group("slots")
+	for slot in slots:
+		if slot is Control and slot.is_visible_in_tree():
+			if slot.get_global_rect().has_point(get_global_mouse_position()):
+				if slot.has_method("receive_card"):
+					slot.receive_card(self)
 					return

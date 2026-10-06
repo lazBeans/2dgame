@@ -1,57 +1,49 @@
-## PURPOSE: Manages an individual event segment in the deduction scene, 
-## handling dynamic segment resource loading and chapter sequence validation.
+## PURPOSE: Interactive event segment card node extending Area2D DetectiveCardBase.
+## Displays event visual graphics and title labels based on loaded segment data resources.
 extends DetectiveCardBase
 class_name EventSegment
 
 # ==========================================
-# STATE VARIABLES & SETTERS
+# PROPERTIES & NODE REFERENCES
 # ==========================================
+
+## Unique string identifier corresponding to the event resource file.
 var segment_identifier: String = "":
 	set(value):
 		segment_identifier = value
+		if is_node_ready():
+			_update_segment_display()
+
+@onready var background: NinePatchRect = $Background
+@onready var label: Label = $Label
+
+# ==========================================
+# INITIALIZATION & DISPLAY
+# ==========================================
+
+func _ready() -> void:
+	_update_segment_display()
+
+## Configures the segment with a specific event ID.
+func setup(id: String) -> void:
+	segment_identifier = id
+	if is_node_ready():
 		_update_segment_display()
 
-# ==========================================
-# DISPLAY & SETUP
-# ==========================================
-
-## Updates the card's text label based on the current segment identifier resource.
+## Loads the corresponding event resource file and updates the visual elements.
 func _update_segment_display() -> void:
 	if segment_identifier.is_empty():
 		return
 		
-	var resource_path = "res://resources/segments/" + segment_identifier + ".tres"
-	var segment_data = load(resource_path) as SegmentData
+	# Ensure this path string matches your FileSystem directory exactly:
+	var resource_path: String = "res://resources/segments/" + segment_identifier + ".tres"
 	
-	if segment_data and has_node("EventDescription"):
-		$EventDescription.text = segment_data.description
-
-## Implements the abstract base method. Syncs card_identifier to segment_identifier 
-## and loads the correct segment resource data from the segment directory.
-func setup_card_visual() -> void:
-	segment_identifier = card_identifier
-	
-	var resource_path = "res://resources/segments/" + card_identifier + ".tres"
-	var segment_data = load(resource_path) as SegmentData
-	
-	if segment_data:
-		if has_node("EventDescription"):
-			$EventDescription.text = segment_data.description
-		if has_node("TextureRect") and segment_data.texture:
-			$TextureRect.texture = segment_data.texture
+	if ResourceLoader.exists(resource_path):
+		var segment_data: Resource = load(resource_path)
+		if segment_data:
+			if background and "texture" in segment_data and segment_data.texture:
+				background.texture = segment_data.texture
+			if label and "description" in segment_data:
+				label.text = segment_data.description
 	else:
-		push_error("EventSegment: Failed to load SegmentData resource at path: " + resource_path)
-
-# ==========================================
-# PUZZLE & VALIDATION LOGIC
-# ==========================================
-
-## Validates if the given sequence matches the required chapter segments.
-func in_valid_order(segments: Array) -> bool:
-	var master_array = FileManager.load_required_segments(GameManager.current_chapter)
-	
-	if master_array == segments:
-		Dialogic.start("qilin_hunt")
-		return true
-	
-	return false
+		push_error("EventSegment: Failed to load resource at: " + resource_path)

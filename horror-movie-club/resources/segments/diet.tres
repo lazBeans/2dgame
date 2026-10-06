@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="SegmentData" format=3 uid="uid://0p5wpucjt5gi"]
-
-[ext_resource type="Script" uid="uid://dtnt02ve6sjdo" path="res://resources/segments/segment_data.gd" id="1_hssjb"]
-
-[resource]
-script = ExtResource("1_hssjb")
-id = "diet"
-description = "It ate grass from this part of botanical garden."
-metadata/_custom_type_script = "uid://dtnt02ve6sjdo"

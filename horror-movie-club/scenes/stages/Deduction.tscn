@@ -29,16 +29,16 @@ size_flags_horizontal = 3
 theme_override_constants/separation = 0
 metadata/_edit_use_anchors_ = true
 
-[node name="SpawnPoints" type="Node2D" parent="." unique_id=635503487]
+[node name="SpawnPoints" type="Node2D" parent="." unique_id=635503487 groups=["spawn_points"]]
 
 [node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1339051390 groups=["spawn_points"]]
-position = Vector2(863, 240)
+position = Vector2(399, 495)
 
 [node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1433953731 groups=["spawn_points"]]
-position = Vector2(3062, 684)
+position = Vector2(2998, 802)
 
 [node name="Spawn3" type="Marker2D" parent="SpawnPoints" unique_id=771451892 groups=["spawn_points"]]
-position = Vector2(665, 596)
+position = Vector2(783, 802)
 
 [node name="Spawn4" type="Marker2D" parent="SpawnPoints" unique_id=863333654 groups=["spawn_points"]]
 position = Vector2(3202, 1166)
@@ -47,13 +47,13 @@ position = Vector2(3202, 1166)
 position = Vector2(2900, 296)
 
 [node name="Spawn6" type="Marker2D" parent="SpawnPoints" unique_id=1592823411 groups=["spawn_points"]]
-position = Vector2(521, 1057)
+position = Vector2(399, 1166)
 
 [node name="Spawn7" type="Marker2D" parent="SpawnPoints" unique_id=619910570 groups=["spawn_points"]]
-position = Vector2(2001, 802)
+position = Vector2(2491, 596)
 
 [node name="Spawn8" type="Marker2D" parent="SpawnPoints" unique_id=1639718625 groups=["spawn_points"]]
-position = Vector2(2203, 385)
+position = Vector2(980, 296)
 
 [node name="Spawn9" type="Marker2D" parent="SpawnPoints" unique_id=2079608501 groups=["spawn_points"]]
-position = Vector2(1281, 802)
+position = Vector2(1255, 676)

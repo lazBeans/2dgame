@@ -1,20 +1,16 @@
-## PURPOSE: Manages an individual evidence card on the detective board, 
-## handling free-form dragging via DragManager, dynamic evidence texture/label loading, 
-## and pin click interactions used for drawing yarn connection threads.
+## PURPOSE: Interactive evidence card node extending Area2D DetectiveCardBase.
+## Handles evidence presentation, pin interaction triggers, and dragging state overrides.
 extends DetectiveCardBase
 class_name EvidenceCard
 
-signal pin_clicked(card: EvidenceCard)
-
 # ==========================================
-# STATE VARIABLES & SETTERS
+# PROPERTIES & NODE REFERENCES
 # ==========================================
-var evidence_identifier: String = "":
-	set(value):
-		evidence_identifier = value
-		_update_card_display()
 
-@onready var texture_rect: TextureRect = $TextureRect
+## Unique identifier string referencing the evidence resource file.
+var evidence_identifier: String = ""
+
+@onready var background: NinePatchRect = $Background
 @onready var label: Label = $Label
 @onready var pin_button: TextureButton = $PinButton
 
@@ -22,65 +18,49 @@ var evidence_identifier: String = "":
 # INITIALIZATION & SETUP
 # ==========================================
 
-## Called when the node enters the scene tree for the first time.
+## Connects pin button signals on startup.
 func _ready() -> void:
+	super()
 	if pin_button:
 		pin_button.pressed.connect(_on_pin_pressed)
 
-## Updates the card's text label based on current evidence identifiers.
-func _update_card_display() -> void:
+## Configures the card with an evidence ID and populates texture and label displays.
+func setup(id: String) -> void:
+	evidence_identifier = id
 	if evidence_identifier.is_empty():
 		return
-		
-	var resource_path = "res://resources/evidences/" + evidence_identifier + ".tres"
-	var evidence_data = load(resource_path) as EvidenceData
 	
-	if evidence_data and label:
-		label.text = evidence_data.evidence_name
-
-## Implements the abstract base method. Syncs card_identifier to evidence_identifier 
-## to ensure thread connections receive the correct ID, then loads textures and text.
-func setup_card_visual() -> void:
-	# Synchronize base identifier with the subclass property to fix thread connection routing
-	evidence_identifier = card_identifier
-	
-	var resource_path = "res://resources/evidences/" + evidence_identifier + ".tres"
-	var evidence_data = load(resource_path) as EvidenceData
-	
-	if evidence_data:
-		if texture_rect and evidence_data.texture:
-			texture_rect.texture = evidence_data.texture
-		if label:
-			label.text = evidence_data.evidence_name
-	else:
-		push_error("EvidenceCard: Failed to load Card resource at path: " + resource_path)
+	var resource_path: String = "res://resources/evidences/" + evidence_identifier + ".tres"
+	if ResourceLoader.exists(resource_path):
+		var evidence_data: Resource = load(resource_path)
+		if evidence_data:
+			if background and "texture" in evidence_data and evidence_data.texture:
+				background.texture = evidence_data.texture
+			if label and "evidence_name" in evidence_data:
+				label.text = evidence_data.evidence_name
 
 # ==========================================
-# INPUT & DRAGGING OVERRIDES
+# OVERRIDDEN DRAG BEHAVIOR
 # ==========================================
 
-## Extends base drag behavior to hide pin interactions while moving.
+## Hides the pin button while dragging the card.
 func start_dragging() -> void:
 	super()
 	if pin_button:
 		pin_button.visible = false
 
-## Restores pin visibility when dragging concludes.
+## Re-enables the pin button upon dropping the card.
 func stop_dragging() -> void:
 	super()
 	if pin_button:
 		pin_button.visible = true
 
 # ==========================================
-# SIGNAL CALLBACKS
+# PIN INTERACTION HANDLERS
 # ==========================================
 
-## Handles pin button clicks, passing the synchronized evidence identifier to the ThreadContainer.
+## Emits pin click events to the global ThreadContainer for thread connections.
 func _on_pin_pressed() -> void:
-	print("Pin clicked on evidence card: ", evidence_identifier)
-	
-	var thread_container = get_tree().get_first_node_in_group("thread_container")
-	if thread_container:
+	var thread_container: Node = get_tree().get_first_node_in_group("thread_container")
+	if thread_container and thread_container.has_method("_on_pin_clicked"):
 		thread_container._on_pin_clicked(evidence_identifier, pin_button)
-	else:
-		push_error("EvidenceCard: Could not find ThreadContainer in group 'thread_container'!")

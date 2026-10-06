@@ -1,50 +1,59 @@
-## PURPOSE: Abstract base class for all interactive UI slots (TraySlot, DeductionSlot, etc.).
-## Handles shared state, item holding, drag-and-drop detection, and slot updates.
+## PURPOSE: Abstract base class for interactive UI slots (TraySlot, DeductionSlot, etc.).
+## Manages held item state, drag-and-drop validation, and preview rendering.
 extends Control
 class_name DetectiveSlotBase
 
+# ==========================================
+# SIGNALS
+# ==========================================
+
+## Emitted when an item is successfully placed into this slot.
 signal slot_filled(item_id: String)
+
+## Emitted when the slot's contents are cleared.
 signal slot_emptied
 
 # ==========================================
-# STATE VARIABLES & NODE REFERENCES
+# STATE & NODE REFERENCES
 # ==========================================
+
+## Identifier of the item currently occupying this slot.
 var current_item_id: String = ""
 
 @onready var texture_rect: TextureRect = get_node_or_null("TextureRect")
 @onready var label: Label = get_node_or_null("Label")
 
 # ==========================================
-# GETTERS & HELPER METHODS
+# STATE ACCESSORS & HELPERS
 # ==========================================
 
 ## Returns true if the slot does not currently contain an item.
 func is_empty() -> bool:
 	return current_item_id.is_empty()
 
-## Returns the ID of the item currently resting in the slot.
+## Returns the unique ID string of the item held in the slot.
 func get_item_id() -> String:
 	return current_item_id
 
-## Backward-compatibility alias for scripts calling get_evidence_id().
+## Backward-compatibility alias returning the stored item ID string.
 func get_evidence_id() -> String:
 	return current_item_id
 
 # ==========================================
-# SLOT SETTERS & CLEARING
+# SLOT POPULATION & CLEARING
 # ==========================================
 
-## Base method to populate the slot. Subclasses override this for custom visual loading.
+## Sets the slot's current item identifier and emits the slot_filled signal.
 func set_slot_item(id: String) -> void:
 	current_item_id = id
 	if not current_item_id.is_empty():
 		slot_filled.emit(current_item_id)
 
-## Backward-compatibility alias for scripts calling set_evidence().
+## Backward-compatibility alias for setting slot items.
 func set_evidence(id: String) -> void:
 	set_slot_item(id)
 
-## Clears the slot's current item and resets its visual elements.
+## Resets the slot state and hides associated visual elements.
 func clear_slot() -> void:
 	current_item_id = ""
 	if texture_rect:
@@ -55,10 +64,10 @@ func clear_slot() -> void:
 	slot_emptied.emit()
 
 # ==========================================
-# DRAG-AND-DROP LOGIC
+# GODOT DRAG-AND-DROP OVERRIDES
 # ==========================================
 
-## Determines whether this slot can accept an incoming dragged payload.
+## Determines whether an incoming drag payload can be dropped into this slot.
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if not is_empty():
 		return false
@@ -68,7 +77,7 @@ func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 		return true
 	return false
 
-## Handles receiving a dropped item, extracting its ID, and populating this slot.
+## Accepts drag payload, extracts its identifier, populates this slot, and clears the origin slot.
 func _drop_data(_at_position: Vector2, data: Variant) -> void:
 	var item_id: String = ""
 	
@@ -80,14 +89,13 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		elif data.has_method("get_evidence_id"):
 			item_id = data.get_evidence_id()
 			
-		# If transferred from another slot, clear origin slot
 		if data is DetectiveSlotBase and data != self:
 			data.clear_slot()
 
 	if not item_id.is_empty():
 		set_slot_item(item_id)
 
-## Generates drag data preview when pulling an item out of this slot.
+## Generates a visual drag preview control when dragging an item out of this slot.
 func _get_drag_data(at_position: Vector2) -> Variant:
 	if is_empty():
 		return null
@@ -98,17 +106,12 @@ func _get_drag_data(at_position: Vector2) -> Variant:
 	
 	preview.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
 	
-	# 1. Define scale factor (1.15 = 15% larger, 1.2 = 20% larger)
-	var scale_factor := 1.15
-	
-	# 2. Calculate the scaled target size
-	var base_size := size if size != Vector2.ZERO else Vector2(100, 100)
-	var target_size := base_size * scale_factor
+	var scale_factor: float = 1.15
+	var base_size: Vector2 = size if size != Vector2.ZERO else Vector2(100, 100)
+	var target_size: Vector2 = base_size * scale_factor
 	
 	preview.custom_minimum_size = target_size
 	preview.size = target_size
-	
-	# 3. Adjust position offset so the cursor anchor scales proportionally
 	preview.position = -at_position * scale_factor
 
 	var drag_container := Control.new()
