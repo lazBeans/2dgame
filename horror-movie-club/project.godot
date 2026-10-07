@@ -99,6 +99,8 @@ enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
 [global_group]
 
 spawn_points=""
+world_container=""
+detective_board=""
 
 [input]
 

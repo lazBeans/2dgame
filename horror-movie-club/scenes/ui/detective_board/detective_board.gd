@@ -7,6 +7,8 @@ class_name DetectiveBoard
 # EXPORTED & ONREADY REFERENCES
 # ==========================================
 
+signal board_toggled(is_open: bool)
+
 @export var evidence_card_scene: PackedScene = preload("res://scenes/components/EvidenceCard.tscn")
 
 @onready var board_container: Node = find_child("BoardContainer")
@@ -44,25 +46,46 @@ func _input(event: InputEvent) -> void:
 			toggle_board()
 			get_viewport().set_input_as_handled()
 
-## Toggles canvas visibility and notifies thread layers and sub-systems.
-# detective_board.gd
-func toggle_board() -> void:
-	visible = not visible
-	SignalBus.board_toggled.emit(visible)
+# Inside res://scenes/ui/detective_board/detective_board.gd
+
+## Explicitly hides the detective board and all associated overlay elements
+func hide_board() -> void:
+	visible = false
+	board_toggled.emit(false)
 	
-	var thread_container: Node = get_tree().get_first_node_in_group("thread_container")
-	if thread_container:
-		# Use the new custom function to toggle the line canvas
-		if thread_container.has_method("set_lines_visible"):
-			thread_container.set_lines_visible(visible)
-		else:
-			thread_container.visible = visible
+	# Hide yarn/thread connections layer
+	var tc = get_tree().get_first_node_in_group("thread_container")
+	if tc:
+		tc.visible = false
+		if tc.has_method("reset_connection_state"):
+			tc.reset_connection_state()
 			
-		if not visible and thread_container.has_method("reset_connection_state"):
-			thread_container.reset_connection_state()
-			
+	# Hide button layer
+	var button_layer = get_tree().get_first_node_in_group("button_layer")
+	if button_layer:
+		button_layer.visible = false
+
+## Explicitly opens the detective board
+func show_board() -> void:
+	visible = true
+	board_toggled.emit(true)
+	
+	var tc = get_tree().get_first_node_in_group("thread_container")
+	if tc:
+		tc.visible = true
+		
+	var button_layer = get_tree().get_first_node_in_group("button_layer")
+	if button_layer:
+		button_layer.visible = true
+		
+	update_tray()
+
+## Toggle helper using explicit states
+func toggle_board() -> void:
 	if visible:
-		update_tray()
+		hide_board()
+	else:
+		show_board()
 
 # ==========================================
 # TRAY & WORKSPACE BOARD MANAGEMENT

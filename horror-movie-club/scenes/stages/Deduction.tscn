@@ -35,7 +35,7 @@ load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.cte
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nndrs"]
 load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.ctex"
 
-[node name="Deduction" type="Control" unique_id=1164762683]
+[node name="Deduction" type="Control" unique_id=1164762683 groups=["world_container"]]
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_teq53")
@@ -54,11 +54,11 @@ texture = ExtResource("1_h20no")
 
 [node name="film_bg1" type="TextureRect" parent="." unique_id=2118641058]
 layout_mode = 0
-offset_left = 1924.0
-offset_top = -1269.0
-offset_right = 6365.4697
-offset_bottom = -379.95447
-rotation = 2.004341
+offset_left = 2306.0
+offset_top = -1016.00006
+offset_right = 6747.4697
+offset_bottom = -126.95453
+rotation = 2.102368
 mouse_filter = 2
 texture = SubResource("CompressedTexture2D_j05r2")
 expand_mode = 1
@@ -66,11 +66,11 @@ stretch_mode = 5
 
 [node name="film_option_1" type="TextureRect" parent="." unique_id=283359633]
 layout_mode = 0
-offset_left = 2851.0
-offset_top = -732.00006
-offset_right = 7292.4697
-offset_bottom = 157.04547
-rotation = 2.443461
+offset_left = 3316.9998
+offset_top = -312.0
+offset_right = 7758.4697
+offset_bottom = 577.04553
+rotation = 2.59613
 mouse_filter = 2
 texture = SubResource("CompressedTexture2D_3rml2")
 expand_mode = 1
@@ -82,10 +82,10 @@ texture = ExtResource("4_3rml2")
 
 [node name="film_bg2" type="TextureRect" parent="." unique_id=815534846]
 layout_mode = 0
-offset_left = 4726.0
-offset_top = -419.99988
-offset_right = 9167.47
-offset_bottom = 469.04565
+offset_left = 4570.0
+offset_top = -509.0
+offset_right = 9011.47
+offset_bottom = 380.04553
 rotation = 2.0039907
 mouse_filter = 2
 texture = SubResource("CompressedTexture2D_dcxcv")
@@ -94,11 +94,11 @@ stretch_mode = 5
 
 [node name="film_option_2" type="TextureRect" parent="." unique_id=1905603591]
 layout_mode = 0
-offset_left = 4978.0
-offset_top = 634.99994
-offset_right = 9419.47
-offset_bottom = 1524.0455
-rotation = 2.3561945
+offset_left = 4989.0
+offset_top = 891.00006
+offset_right = 9430.471
+offset_bottom = 1780.0457
+rotation = 2.5777938
 texture = SubResource("CompressedTexture2D_nndrs")
 expand_mode = 1
 stretch_mode = 5
@@ -106,9 +106,9 @@ stretch_mode = 5
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=635503487 groups=["spawn_points"]]
 
 [node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1339051390 groups=["spawn_points"]]
-position = Vector2(29.99997, 668)
-rotation = 5.5850534
+position = Vector2(316, 643.00006)
+rotation = 5.7368975
 
 [node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1433953731 groups=["spawn_points"]]
-position = Vector2(2918, 1647)
-rotation = 5.497787
+position = Vector2(2757, 1425.9998)
+rotation = 5.719444

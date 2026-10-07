@@ -1,6 +1,6 @@
 ## PURPOSE: Manages sequence-based puzzle completion routines and coordinates 
 ## chained dialogue events between clue resolutions and chapter deductions.
-extends Node
+extends Control
 
 # ==========================================
 # EXPORT & STATE VARIABLES
@@ -33,6 +33,7 @@ var current_clue: String = ""
 
 ## Fetches board markers, sets up slots, and spawns available event segments.
 func _ready() -> void:
+	visible = false
 	initialize_deduction()
 
 ## Initializes the deduction stage manually or on startup.

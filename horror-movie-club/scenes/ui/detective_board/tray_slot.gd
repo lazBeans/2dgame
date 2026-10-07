@@ -89,3 +89,7 @@ func spawn_deduction_button() -> void:
 ## Emits deduction_button_pressed signal when the deduction button is pressed.
 func _on_deduction_pressed() -> void:
 	deduction_button_pressed.emit()
+	var child_to_remove = get_node_or_null("DeductionButton")
+	if child_to_remove:
+		child_to_remove.queue_free()
+	

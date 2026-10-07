@@ -1,3 +1,3 @@
 [gd_scene format=3 uid="uid://bfdyqrshfbydb"]
 
-[node name="RoomBase" type="Node2D" unique_id=1613499306]
+[node name="RoomBase" type="Node2D" unique_id=1613499306 groups=["world_container"]]

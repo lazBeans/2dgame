@@ -62,6 +62,18 @@ func _on_dialogic_signal(argument: Variant) -> void:
 		else:
 			push_error("GameManager: Key '" + scene_key + "' not found in scenes.json")
 			
+	elif arg_str.begins_with("change_sub_scene:"):
+		var scene_key: String = arg_str.get_slice(":", 1).strip_edges()
+		
+		# 1. Gracefully end the dialogue timeline
+		Dialogic.end_timeline()
+		
+		# 2. Tell RoomManager to load the target scene inside WorldContainer
+		if RoomManager.has_method("change_sub_scene"):
+			RoomManager.change_sub_scene(scene_key)
+		else:
+			push_error("GameManager: RoomManager does not have method 'change_sub_scene'")
+			
 	# Handles advancing the game chapter and resetting the detective board
 	elif arg_str.begins_with("set_chapter:"):
 		var chapter_num: String = arg_str.get_slice(":", 1).strip_edges()
