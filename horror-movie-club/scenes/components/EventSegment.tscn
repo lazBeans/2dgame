@@ -1,36 +1,32 @@
 [gd_scene format=3 uid="uid://bg1ag821pb6rk"]
 
 [ext_resource type="Script" uid="uid://c2vihciy62pdi" path="res://scenes/components/event_segment.gd" id="1_5vjpj"]
-[ext_resource type="Texture2D" uid="uid://dgnjay8l6fch5" path="res://assets/textures/thought_bubble.png" id="2_46qyi"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3qfvb"]
-size = Vector2(300, 225)
-
-[node name="EventSegment" type="Area2D" unique_id=363719018]
+[node name="EventSegment" type="Button" unique_id=1991209914]
+custom_minimum_size = Vector2(789, 592)
+offset_right = 789.0
+offset_bottom = 592.0
+size_flags_horizontal = 4
+size_flags_vertical = 4
 script = ExtResource("1_5vjpj")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=671925340]
-light_mask = 4
-visibility_layer = 2
-shape = SubResource("RectangleShape2D_3qfvb")
-
-[node name="Background" type="NinePatchRect" parent="." unique_id=1530696771]
+[node name="Background" type="TextureRect" parent="." unique_id=438785559]
 custom_minimum_size = Vector2(300, 225)
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("2_46qyi")
 
 [node name="Label" type="Label" parent="." unique_id=1819430949]
 custom_minimum_size = Vector2(300, 225)
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_colors/font_color = Color(0, 0, 0, 1)
 theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1

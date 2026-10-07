@@ -45,13 +45,19 @@ func _input(event: InputEvent) -> void:
 			get_viewport().set_input_as_handled()
 
 ## Toggles canvas visibility and notifies thread layers and sub-systems.
+# detective_board.gd
 func toggle_board() -> void:
 	visible = not visible
 	SignalBus.board_toggled.emit(visible)
 	
 	var thread_container: Node = get_tree().get_first_node_in_group("thread_container")
 	if thread_container:
-		thread_container.visible = visible
+		# Use the new custom function to toggle the line canvas
+		if thread_container.has_method("set_lines_visible"):
+			thread_container.set_lines_visible(visible)
+		else:
+			thread_container.visible = visible
+			
 		if not visible and thread_container.has_method("reset_connection_state"):
 			thread_container.reset_connection_state()
 			

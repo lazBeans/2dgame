@@ -13,8 +13,8 @@ extends Node
 var current_ch: String = GameManager.current_chapter
 
 ## Array of required event segment IDs for the current chapter sequence.
-var master_segments: Dictionary = FileManager.load_required_segments(current_ch)
-var master_event: Array = []
+var master_evidences: Dictionary = FileManager.load_required_segments(current_ch)
+var master_clues: Array = []
 
 ## Preloaded EventSegment scene used for instantiation.
 var segment: PackedScene = preload("res://scenes/components/EventSegment.tscn")
@@ -24,6 +24,8 @@ var options: Array = []
 
 ## Array of Marker2D or Node spawn point locations found in the scene tree.
 var spawns: Array = []
+
+var current_clue: String = ""
 
 # ==========================================
 # INITIALIZATION
@@ -42,14 +44,14 @@ func initialize_deduction() -> void:
 	else:
 		spawns = get_tree().get_nodes_in_group("spawn_points")
 	
-	# 3. Grab unlocked segments from GameManager
-	if "unlocked_segments" in GameManager:
-		for seg_id in GameManager.unlocked_segments:
-			if not options.has(seg_id):
-				options.append(seg_id)
+	# 3. Create a master ordered clues list
+	if not master_evidences.is_empty():
+		master_clues = master_evidences.keys()
+			
+		current_clue = master_clues.pop_front()
 	
 	# 4. Spawn cards onto the board canvas
-	if not options.is_empty():
+	if not master_clues.is_empty():
 		_spawn_all_segments()
 
 # ==========================================
@@ -90,8 +92,10 @@ func _spawn_all_segments() -> void:
 
 	var spawn_parent = _find_target_node("SpawnPoints")
 	var parent_to_use = spawn_parent if spawn_parent else get_tree().current_scene
-
-	for i in range(min(options.size(), spawns.size())):
+	
+	_deduction_phase(current_clue)
+	
+	for i in range(spawns.size()):
 		print("Spawning segment ", i, " with ID: ", options[i])
 		
 		# 1. Instantiate without strict type-casting that can resolve to null
@@ -108,6 +112,7 @@ func _spawn_all_segments() -> void:
 		# 3. Assign global position safely
 		if spawns[i]:
 			event_segment.global_position = spawns[i].global_position
+			event_segment.rotation = spawns[i].global_rotation
 			print("Set position to marker at: ", spawns[i].global_position)
 		
 		# 4. Initialize card data
@@ -115,7 +120,17 @@ func _spawn_all_segments() -> void:
 			event_segment.setup(options[i])
 			
 	print("--- SPAWN DEBUG END ---")
-
+	
+func _deduction_phase(evidence_id: String) -> void:
+	if not options.is_empty():
+		options.clear()
+	if options.is_empty():
+		options.append(master_evidences.get(evidence_id).get("correct"))
+		options.append(master_evidences.get(evidence_id).get("wrong"))
+	options.shuffle()
+	for option in options:
+		print("Option: ", option)
+		
 # ==========================================
 # PUZZLE COMPLETION FLOW
 # ==========================================

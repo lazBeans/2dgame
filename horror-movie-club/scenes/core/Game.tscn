@@ -9,7 +9,7 @@ script/source = "extends Node2D
 [node name="Game" type="Node2D" unique_id=13086844]
 script = SubResource("GDScript_ve7bo")
 
-[node name="WorldContainer" type="Node2D" parent="." unique_id=1788578649]
+[node name="WorldContainer" type="Node2D" parent="." unique_id=1788578649 groups=["world_container"]]
 
 [node name="MainHUD" type="CanvasLayer" parent="." unique_id=920082924]
 

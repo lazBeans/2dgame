@@ -2,37 +2,113 @@
 
 [ext_resource type="Texture2D" uid="uid://laf6bwjl6kn3" path="res://assets/textures/deduction.png" id="1_h20no"]
 [ext_resource type="Script" uid="uid://cj6gibfq7eahv" path="res://autoloads/deduction_manager.gd" id="1_teq53"]
-[ext_resource type="PackedScene" uid="uid://dey4ibvtnf0na" path="res://scenes/components/OrderedSlot.tscn" id="2_3rml2"]
+[ext_resource type="Texture2D" uid="uid://b4svomidtnrhv" path="res://assets/textures/slots.png" id="2_j05r2"]
+[ext_resource type="Texture2D" uid="uid://d4hdw38uekb7v" path="res://assets/textures/deduction_center.png" id="4_3rml2"]
 
-[node name="Deduction" type="Node" unique_id=2039921518]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_limt6"]
+size = Vector2(300, 225)
+
+[sub_resource type="PackedScene" id="PackedScene_3rml2"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"id_paths": [],
+"names": PackedStringArray("Slot", "Area2D", "CollisionShape2D", "shape", "Marker2D", "Background", "anchors_preset", "anchor_left", "anchor_top", "anchor_right", "anchor_bottom", "offset_left", "offset_top", "offset_right", "offset_bottom", "grow_horizontal", "grow_vertical", "texture", "NinePatchRect"),
+"node_count": 4,
+"node_ids": PackedInt32Array(550006798, 1613606982, 796482080, 1183986441),
+"node_paths": [],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 0, 0, 0, 0, 2, 2, -1, 1, 3, 0, 0, 0, 0, 4, 4, -1, 0, 0, 0, 0, 18, 5, -1, 12, 6, 1, 7, 2, 8, 2, 9, 2, 10, 2, 11, 3, 12, 3, 13, 4, 14, 4, 15, 5, 16, 5, 17, 6, 0),
+"variants": [SubResource("RectangleShape2D_limt6"), 8, 0.5, -169.5, 169.5, 2, ExtResource("2_j05r2")],
+"version": 3
+}
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j05r2"]
+load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3rml2"]
+load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dcxcv"]
+load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.ctex"
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nndrs"]
+load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.ctex"
+
+[node name="Deduction" type="Control" unique_id=1164762683]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_teq53")
-slot_scene = ExtResource("2_3rml2")
+slot_scene = SubResource("PackedScene_3rml2")
 
 [node name="Background" type="TextureRect" parent="." unique_id=2106629062]
+layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 3840.0
+offset_bottom = 2160.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_h20no")
 
-[node name="OrderedSlot" type="HBoxContainer" parent="." unique_id=797740360]
-custom_minimum_size = Vector2(3840, 790)
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_top = -790.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 3
-theme_override_constants/separation = 0
-metadata/_edit_use_anchors_ = true
+[node name="film_bg1" type="TextureRect" parent="." unique_id=2118641058]
+layout_mode = 0
+offset_left = 1924.0
+offset_top = -1269.0
+offset_right = 6365.4697
+offset_bottom = -379.95447
+rotation = 2.004341
+mouse_filter = 2
+texture = SubResource("CompressedTexture2D_j05r2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="film_option_1" type="TextureRect" parent="." unique_id=283359633]
+layout_mode = 0
+offset_left = 2851.0
+offset_top = -732.00006
+offset_right = 7292.4697
+offset_bottom = 157.04547
+rotation = 2.443461
+mouse_filter = 2
+texture = SubResource("CompressedTexture2D_3rml2")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="character" type="TextureRect" parent="." unique_id=625969952]
+layout_mode = 0
+texture = ExtResource("4_3rml2")
+
+[node name="film_bg2" type="TextureRect" parent="." unique_id=815534846]
+layout_mode = 0
+offset_left = 4726.0
+offset_top = -419.99988
+offset_right = 9167.47
+offset_bottom = 469.04565
+rotation = 2.0039907
+mouse_filter = 2
+texture = SubResource("CompressedTexture2D_dcxcv")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="film_option_2" type="TextureRect" parent="." unique_id=1905603591]
+layout_mode = 0
+offset_left = 4978.0
+offset_top = 634.99994
+offset_right = 9419.47
+offset_bottom = 1524.0455
+rotation = 2.3561945
+texture = SubResource("CompressedTexture2D_nndrs")
+expand_mode = 1
+stretch_mode = 5
 
 [node name="SpawnPoints" type="Node2D" parent="." unique_id=635503487 groups=["spawn_points"]]
 
 [node name="Spawn1" type="Marker2D" parent="SpawnPoints" unique_id=1339051390 groups=["spawn_points"]]
-position = Vector2(399, 495)
+position = Vector2(29.99997, 668)
+rotation = 5.5850534
 
 [node name="Spawn2" type="Marker2D" parent="SpawnPoints" unique_id=1433953731 groups=["spawn_points"]]
-position = Vector2(2998, 802)
+position = Vector2(2918, 1647)
+rotation = 5.497787

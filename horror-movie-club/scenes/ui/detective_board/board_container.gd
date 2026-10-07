@@ -74,8 +74,6 @@ func drop_card_on_board(card: DetectiveCardBase, drop_global_pos: Vector2) -> vo
 func _get_card_half_size(card: DetectiveCardBase) -> Vector2:
 	if card is EvidenceCard:
 		return Vector2(250.0, 304.0)
-	elif card is EventSegment:
-		return Vector2(150.0, 112.5)
 	
 	var col: CollisionShape2D = card.get_node_or_null("CollisionShape2D") as CollisionShape2D
 	if col and col.shape and col.shape is RectangleShape2D:

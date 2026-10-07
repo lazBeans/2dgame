@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_nete1")
-id = "morphorlogy2"
-description = "Wrong Option"
+id = "morphology_wrong"
+description = "Morphology Wrong Option"
 metadata/_custom_type_script = "uid://dtnt02ve6sjdo"

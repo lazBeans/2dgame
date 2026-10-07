@@ -4,6 +4,6 @@
 
 [resource]
 script = ExtResource("1_u43r7")
-id = "diet1"
+id = "diet_correct"
 description = "Correct Option"
 metadata/_custom_type_script = "uid://dtnt02ve6sjdo"

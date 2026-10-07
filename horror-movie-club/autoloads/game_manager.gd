@@ -52,7 +52,7 @@ func _on_dialogic_signal(argument: Variant) -> void:
 			unlocked_segments.append(segment_id)
 			
 	# Handles transitioning to a new scene using keys defined in scenes.json
-	elif arg_str.begins_with("change-scene:") or arg_str.begins_with("change_scene:"):
+	elif arg_str.begins_with("change_scene:"):
 		var scene_key: String = arg_str.get_slice(":", 1).strip_edges()
 		var target_path: String = FileManager.load_scene(scene_key)
 		
