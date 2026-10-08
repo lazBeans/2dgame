@@ -41,3 +41,4 @@ func _update_segment_display(path: String) -> void:
 				label.text = segment_data.description
 	else:
 		push_error("Path Not Found")
+		

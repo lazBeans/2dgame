@@ -2,6 +2,8 @@
 ## chained dialogue events between clue resolutions and chapter deductions.
 extends Control
 
+signal option_button_pressed(option_id: String)
+
 # ==========================================
 # EXPORT & STATE VARIABLES
 # ==========================================
@@ -150,3 +152,6 @@ func _on_clue_dialogue_finished() -> void:
 		
 	var chapter_deduction: String = GameManager.current_chapter + "_deduction"
 	Dialogic.start(chapter_deduction)
+	
+func  _on_option_button_pressed(id) -> void:
+	option_button_pressed.emit(id)
