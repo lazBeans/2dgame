@@ -20,7 +20,7 @@ func _ready() -> void:
 func _can_drop_data(_at_position: Vector2, data: Variant) -> bool:
 	if data is TraySlot:
 		return not data.is_empty()
-	if data is DetectiveCardBase or data is EvidenceCard or data is EventSegment:
+	if data is DetectiveCardBase or data is EvidenceCard:
 		return true
 	return false
 
@@ -31,7 +31,7 @@ func _drop_data(_at_position: Vector2, data: Variant) -> void:
 		if data is TraySlot:
 			if board_scene.has_method("drop_evidence"):
 				board_scene.drop_evidence(get_global_mouse_position(), data)
-		elif data is DetectiveCardBase or data is EvidenceCard or data is EventSegment:
+		elif data is DetectiveCardBase or data is EvidenceCard:
 			drop_card_on_board(data, get_global_mouse_position())
 
 # ==========================================

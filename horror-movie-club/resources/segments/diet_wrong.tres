@@ -5,5 +5,5 @@
 [resource]
 script = ExtResource("1_feg7f")
 id = "diet_wrong"
-description = "Wrong Option"
+description = "Diet Wrong Option"
 metadata/_custom_type_script = "uid://dtnt02ve6sjdo"

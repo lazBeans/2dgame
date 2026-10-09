@@ -18,6 +18,8 @@ var deduction_master_data: Dictionary = {}
 ## Current location context string.
 var location: String = ""
 
+var current_ch = GameManager.current_chapter
+
 # ==========================================
 # INITIALIZATION
 # ==========================================

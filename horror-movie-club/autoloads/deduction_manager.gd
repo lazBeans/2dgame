@@ -2,14 +2,13 @@
 ## chained dialogue events between clue resolutions and chapter deductions.
 extends Control
 
-signal option_button_pressed(option_id: String)
-
 # ==========================================
-# EXPORT & STATE VARIABLES
+# ONREADY & STATE VARIABLES
 # ==========================================
+@onready var option_container: Control = $OptionContainer
 
-## Scene resource assigned in the Inspector for ordered slot placements.
-@export var slot_scene: PackedScene
+@onready var option_a_button: Button = $OptionContainer/OptionAButton
+@onready var option_b_button: Button = $OptionContainer/OptionBButton
 
 ## Identifier string of the current chapter loaded from GameManager.
 var current_ch: String = GameManager.current_chapter
@@ -17,16 +16,10 @@ var current_ch: String = GameManager.current_chapter
 ## Array of required event segment IDs for the current chapter sequence.
 var master_evidences: Dictionary = FileManager.load_required_segments(current_ch)
 var master_clues: Array = []
+var current_clue_options: Dictionary = {}
+var current_clue_options_paths: Array = []
 
-## Preloaded EventSegment scene used for instantiation.
-var segment: PackedScene = preload("res://scenes/components/EventSegment.tscn")
-
-## Unordered segment identifiers available to be spawned on the board.
-var options: Array = []
-
-## Array of Marker2D or Node spawn point locations found in the scene tree.
-var spawns: Array = []
-
+var user_choice: Array = []
 var current_clue: String = ""
 
 # ==========================================
@@ -36,104 +29,56 @@ var current_clue: String = ""
 ## Fetches board markers, sets up slots, and spawns available event segments.
 func _ready() -> void:
 	visible = false
-	initialize_deduction()
-
-## Initializes the deduction stage manually or on startup.
-func initialize_deduction() -> void:
-	# 1. Fetch spawn point markers
-	var spawn_container: Node = _find_target_node("SpawnPoints")
-	if spawn_container:
-		spawns = spawn_container.get_children()
-	else:
-		spawns = get_tree().get_nodes_in_group("spawn_points")
+	option_a_button.pressed.connect(_on_button_pressed.bind(option_a_button))
+	option_b_button.pressed.connect(_on_button_pressed.bind(option_b_button))
 	
-	# 3. Create a master ordered clues list
 	if not master_evidences.is_empty():
 		master_clues = master_evidences.keys()
-			
-		current_clue = master_clues.pop_front()
+		
+		deduction_loop()
 	
-	# 4. Spawn cards onto the board canvas
+		
+func deduction_loop() -> void:
+	current_clue = master_clues.pop_front()
+	current_clue_options = master_evidences.get(current_clue)
+	current_clue_options_paths = current_clue_options.values()
+	current_clue_options_paths.shuffle()
+	
+	get_options()
+
+func get_options() -> void:
+	
+	if ResourceLoader.exists(current_clue_options_paths[0]) and ResourceLoader.exists( current_clue_options_paths[1]):
+		var data_a: Resource = load(current_clue_options_paths[0])
+		var data_b: Resource = load(current_clue_options_paths[1])
+			
+		setup_options(data_a, data_b)
+		
+
+# ==========================================
+# BUTTON SETUP
+# ==========================================
+func setup_options(option_a_resource, option_b_resource) -> void:
+	
+	option_a_button.text = option_a_resource.description
+	option_a_button.set_meta("resource_id", option_a_resource.id)
+	
+	option_b_button.text = option_b_resource.description
+	option_b_button.set_meta("resource_id", option_a_resource.id)
+	
+	option_container.show()
+	
+func _on_button_pressed(selected_option: Button) -> void:
+	var selected_id = selected_option.get_meta("resource_id")
+	user_choice.append(selected_id)
+	option_container.hide()
+	
 	if not master_clues.is_empty():
-		_spawn_all_segments()
-
-# ==========================================
-# SEARCH HELPER
-# ==========================================
-
-## Finds a node by name anywhere in the active scene tree or relative to self.
-func _find_target_node(node_name: String) -> Node:
-	var n: Node = get_node_or_null(node_name)
-	if n:
-		return n
+		deduction_loop()
+	else:
+		visible = false
+		Dialogic.start(current_ch, "_culprits")
 	
-	if has_node("%" + node_name):
-		return get_node("%" + node_name)
-		
-	if get_tree() and get_tree().current_scene:
-		if get_tree().current_scene.name == node_name:
-			return get_tree().current_scene
-		var found: Node = get_tree().current_scene.find_child(node_name, true, false)
-		if found:
-			return found
-			
-	return null
-
-# ==========================================
-# SPAWN HELPERS
-# ==========================================
-
-## Instantiates and places EventSegment instances at available spawn points.
-func _spawn_all_segments() -> void:
-	print("--- SPAWN DEBUG START ---")
-	print("Unordered Segments to spawn: ", options.size())
-	print("Spawn Markers found: ", spawns.size())
-
-	if segment == null:
-		push_error("DeductionManager ERROR: 'segment' PackedScene is not assigned in the Inspector!")
-		return
-
-	var spawn_parent = _find_target_node("SpawnPoints")
-	var parent_to_use = spawn_parent if spawn_parent else get_tree().current_scene
-	
-	_deduction_phase(current_clue)
-	
-	for i in range(spawns.size()):
-		print("Spawning segment ", i, " with ID: ", options[i])
-		
-		# 1. Instantiate without strict type-casting that can resolve to null
-		var event_segment = segment.instantiate()
-		
-		if not event_segment:
-			push_error("Failed to instantiate segment scene for index: " + str(i))
-			continue
-			
-		# 2. Add to scene tree first
-		parent_to_use.add_child(event_segment)
-		event_segment.z_index = 10
-		
-		# 3. Assign global position safely
-		if spawns[i]:
-			event_segment.global_position = spawns[i].global_position
-			event_segment.rotation = spawns[i].global_rotation
-			print("Set position to marker at: ", spawns[i].global_position)
-		
-		# 4. Initialize card data
-		if event_segment.has_method("setup"):
-			event_segment.setup(options[i])
-			
-	print("--- SPAWN DEBUG END ---")
-	
-func _deduction_phase(evidence_id: String) -> void:
-	if not options.is_empty():
-		options.clear()
-	if options.is_empty():
-		options.append(master_evidences.get(evidence_id).get("correct"))
-		options.append(master_evidences.get(evidence_id).get("wrong"))
-	options.shuffle()
-	for option in options:
-		print("Option: ", option)
-		
 # ==========================================
 # PUZZLE COMPLETION FLOW
 # ==========================================
@@ -152,6 +97,3 @@ func _on_clue_dialogue_finished() -> void:
 		
 	var chapter_deduction: String = GameManager.current_chapter + "_deduction"
 	Dialogic.start(chapter_deduction)
-	
-func  _on_option_button_pressed(id) -> void:
-	option_button_pressed.emit(id)

@@ -8,7 +8,7 @@ extends Node2D
 ## Starts the core game scene and initiates the prologue dialogue timeline.
 func _on_start_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/core/Game.tscn")
-	Dialogic.start("prologue")
+	Dialogic.start("prologue_test")
 
 ## Opens the game load menu scene.
 func _on_load_pressed() -> void:
