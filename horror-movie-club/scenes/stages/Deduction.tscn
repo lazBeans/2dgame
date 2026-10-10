@@ -84,11 +84,11 @@ texture = SubResource("CompressedTexture2D_nndrs")
 expand_mode = 1
 stretch_mode = 5
 
-[node name="OptionContainer" type="Control" parent="." unique_id=586973259 groups=["spawn_points"]]
+[node name="OptionContainer" type="Control" parent="." unique_id=586973259]
 visible = false
 anchors_preset = 0
 
-[node name="OptionAButton" type="Button" parent="OptionContainer" unique_id=1876821939 groups=["spawn_points"]]
+[node name="OptionAButton" type="Button" parent="OptionContainer" unique_id=1876821939]
 layout_mode = 0
 offset_left = 315.0
 offset_top = 643.0
@@ -97,7 +97,7 @@ offset_bottom = 1236.0
 rotation = -0.54628783
 scale = Vector2(0.99999994, 0.99999994)
 
-[node name="OptionBButton" type="Button" parent="OptionContainer" unique_id=222947288 groups=["spawn_points"]]
+[node name="OptionBButton" type="Button" parent="OptionContainer" unique_id=222947288]
 layout_mode = 0
 offset_left = 2756.0
 offset_top = 1425.9999
