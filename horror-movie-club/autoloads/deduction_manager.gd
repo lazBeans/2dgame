@@ -128,4 +128,7 @@ func _on_button_pressed(selected_option: Button) -> void:
 				master_clues.clear()
 				initiate_deduction()
 			else:
+				# When it's ready, this will trigger a manhunt phase
+				# that will give the player a chance to fight the boss still
+				# without and advantages against it.
 				Dialogic.start("game_over")

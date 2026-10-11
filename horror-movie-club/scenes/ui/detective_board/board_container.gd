@@ -49,20 +49,34 @@ func drop_card_on_board(card: DetectiveCardBase, drop_global_pos: Vector2) -> vo
 			card.get_parent().remove_child(card)
 		add_child(card)
 
+	# CRITICAL: Force the card to be fully visible and opaque upon release
+	card.visible = true
+	card.modulate = Color.WHITE
+
 	var half_size: Vector2 = _get_card_half_size(card)
 	var container_rect: Rect2 = get_global_rect()
+	
+	# If container rect is zero or invalid, fallback to the screen viewport
+	if container_rect.size <= Vector2.ZERO or container_rect.size.x < 100:
+		container_rect = get_viewport().get_visible_rect()
 
 	var target_pos: Vector2 = drop_global_pos
-	target_pos.x = clamp(
-		target_pos.x, 
-		container_rect.position.x + half_size.x, 
-		container_rect.position.x + container_rect.size.x - half_size.x
-	)
-	target_pos.y = clamp(
-		target_pos.y, 
-		container_rect.position.y + half_size.y, 
-		container_rect.position.y + container_rect.size.y - half_size.y
-	)
+	
+	var min_x = container_rect.position.x + half_size.x
+	var max_x = container_rect.position.x + container_rect.size.x - half_size.x
+	var min_y = container_rect.position.y + half_size.y
+	var max_y = container_rect.position.y + container_rect.size.y - half_size.y
+	
+	# Prevent inversion if container is smaller than card half-size
+	if min_x > max_x:
+		target_pos.x = container_rect.position.x + (container_rect.size.x / 2.0)
+	else:
+		target_pos.x = clamp(target_pos.x, min_x, max_x)
+		
+	if min_y > max_y:
+		target_pos.y = container_rect.position.y + (container_rect.size.y / 2.0)
+	else:
+		target_pos.y = clamp(target_pos.y, min_y, max_y)
 
 	card.global_position = target_pos
 

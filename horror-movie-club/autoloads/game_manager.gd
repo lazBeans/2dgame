@@ -10,9 +10,6 @@ extends Node
 ## Queue of newly unlocked evidence IDs waiting to be displayed or placed.
 var pending_evidence_queue: Array[String] = []
 
-## Array of unlocked segment IDs available for deduction sequences.
-var unlocked_segments: Array[String] = []
-
 ## Current chapter identifier string.
 var current_chapter: String = "chapter_1"
 
@@ -46,27 +43,24 @@ func _on_dialogic_signal(argument: Variant) -> void:
 		if SignalBus.has_user_signal("evidence_queued"):
 			SignalBus.evidence_queued.emit(evidence_id)
 			
-	elif arg_str.begins_with("unlock_segment:"):
-		var segment_id: String = arg_str.get_slice(":", 1).strip_edges()
-		if not unlocked_segments.has(segment_id):
-			unlocked_segments.append(segment_id)
-			
+	elif arg_str.begins_with("unlock_culprit:"):
+		var culprit_id: String = arg_str.get_slice(":", 1).strip_edges()
+		pending_evidence_queue.append(culprit_id)
+		if SignalBus.has_user_signal("evidence_queued"):
+			SignalBus.evidence_queued.emit(culprit_id)
+		
 	# Handles transitioning to a new scene using keys defined in scenes.json
 	elif arg_str.begins_with("change_scene:"):
 		var scene_key: String = arg_str.get_slice(":", 1).strip_edges()
 		var target_path: String = FileManager.load_scene(scene_key)
 		
 		if not target_path.is_empty():
-			Dialogic.end_timeline()
 			get_tree().change_scene_to_file(target_path)
 		else:
 			push_error("GameManager: Key '" + scene_key + "' not found in scenes.json")
 			
 	elif arg_str.begins_with("change_sub_scene:"):
 		var scene_key: String = arg_str.get_slice(":", 1).strip_edges()
-		
-		# 1. Gracefully end the dialogue timeline
-		Dialogic.end_timeline()
 		
 		# 2. Tell RoomManager to load the target scene inside WorldContainer
 		if RoomManager.has_method("change_sub_scene"):

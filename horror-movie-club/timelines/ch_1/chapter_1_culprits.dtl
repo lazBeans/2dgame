@@ -1,0 +1,21 @@
+Chapter 1 Culprits
+[signal arg="change_sub_scene: game"]
+set {tries} = 3.0
+label Point1
+if {tries} > 0.0:
+	Who done it?
+	- Option1
+		[signal arg="unlock_culprit: qilin "]
+		jump End_Success
+	- Option2
+		Try again
+		set {tries} -= 1.0
+		jump Point1
+	- Option3
+		Try again
+		set {tries} -= 1.0
+		jump Point1
+else:
+	Manhunt Begins.
+label End_Success
+Let's go back to the board and complete.

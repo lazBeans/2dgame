@@ -64,3 +64,5 @@ func _on_pin_pressed() -> void:
 	var thread_container: Node = get_tree().get_first_node_in_group("thread_container")
 	if thread_container and thread_container.has_method("_on_pin_clicked"):
 		thread_container._on_pin_clicked(evidence_identifier, pin_button)
+	else:
+		push_error("Evidence Card: Could not find Thread container!")

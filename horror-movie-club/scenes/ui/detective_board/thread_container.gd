@@ -94,6 +94,7 @@ func _on_pin_clicked(card_id: String, pin_node: Control) -> void:
 			temp_line.clear_points()
 			temp_line.add_point(start_pos)
 			temp_line.add_point(start_pos)
+		print("Anchor successfully set for: ", card_id)
 		
 	# Second pin selected
 	elif selected_pins.size() == 1:
