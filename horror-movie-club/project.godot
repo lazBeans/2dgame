@@ -17,35 +17,37 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+GameManager="*uid://ba4q38luhw7qc"
 SignalBus="*uid://cbd66lerbnjvf"
 FileManager="*uid://c87hwmi38r5y5"
 DragManager="*uid://m36sb3yfk5yp"
-Dialogic="*uid://ds2q0uclmolvu"
-GameManager="*uid://ba4q38luhw7qc"
-DeductionManager="*uid://cj6gibfq7eahv"
 RoomManager="*uid://dtyxijvfqa1dc"
+Dialogic="*uid://ds2q0uclmolvu"
 
 [dialogic]
 
 directories/dch_directory={}
 directories/dtl_directory={
-"Prologue": "res://timelines/Prologue.dtl",
-"chapter_1_deduction": "res://timelines/chapter_1_deduction.dtl",
-"chatper_1_deduction": "res://timelines/chatper_1_deduction.dtl",
-"end_chapter_1": "res://timelines/end_chapter_1.dtl",
-"prologue": "res://timelines/prologue.dtl",
-"qilin_hunt": "res://timelines/qilin_hunt.dtl",
-"timeline_ch1_scale_and_hoop": "res://timelines/timeline_ch1_scale_and_hoop.dtl",
-"timeline_ch1_what_went_missing": "res://timelines/timeline_ch1_what_went_missing.dtl"
+"chapter_1_culprits": "res://timelines/ch_1/chapter_1_culprits.dtl",
+"chapter_1_deduction": "res://timelines/ch_1/chapter_1_deduction.dtl",
+"chapter_1_final_timeline": "res://timelines/ch_1/chapter_1_final_timeline.dtl",
+"end_chapter_1": "res://timelines/ch_1/end_chapter_1.dtl",
+"game_over": "res://timelines/ch_1/game_over.dtl",
+"prologue": "res://timelines/ch_1/prologue.dtl",
+"timeline_ch1_scale_and_hoop": "res://timelines/ch_1/timeline_ch1_scale_and_hoop.dtl",
+"timeline_ch1_what_went_missing": "res://timelines/ch_1/timeline_ch1_what_went_missing.dtl",
+"try_again": "res://timelines/ch_1/try_again.dtl"
 }
 layout/style_directory={
-"": "res://timelines/test.tres",
-"test": "res://timelines/test.tres"
+"": "res://timelines/demo.tres",
+"demo": "res://timelines/demo.tres"
 }
 glossary/default_case_sensitive=true
-layout/style_list=["res://timelines/test.tres"]
-layout/default_style="res://timelines/test.tres"
-variables={}
+layout/style_list=["res://timelines/demo.tres"]
+layout/default_style="res://timelines/demo.tres"
+variables={
+"tries": 3
+}
 text/letter_speed=0.01
 text/initial_text_reveal_skippable=true
 text/text_reveal_skip_delay=0.1
@@ -78,6 +80,7 @@ audio/channel_defaults={
 "volume": 0.0
 }
 }
+extensions_folder="res://addons/dialogic_additions"
 
 [dialogue_manager]
 
@@ -96,6 +99,11 @@ window/stretch/aspect="expand"
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/dialogic/plugin.cfg")
+
+[global_group]
+
+world_container=""
+detective_board=""
 
 [input]
 
@@ -118,6 +126,11 @@ toggle_board={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194306,"key_label":0,"unicode":0,"location":0,"echo":false,"script":null)
 ]
 }
+
+[layer_names]
+
+2d_physics/layer_2="Slots"
+2d_physics/layer_3="Cards"
 
 [physics]
 

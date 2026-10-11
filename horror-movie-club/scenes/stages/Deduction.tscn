@@ -1,137 +1,106 @@
 [gd_scene format=3 uid="uid://dul3uugv2roha"]
 
 [ext_resource type="Texture2D" uid="uid://laf6bwjl6kn3" path="res://assets/textures/deduction.png" id="1_h20no"]
+[ext_resource type="Script" uid="uid://cj6gibfq7eahv" path="res://autoloads/deduction_manager.gd" id="1_teq53"]
+[ext_resource type="Texture2D" uid="uid://d4hdw38uekb7v" path="res://assets/textures/deduction_center.png" id="4_3rml2"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_h20no"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_j05r2"]
+load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.ctex"
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_teq53"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_3rml2"]
+load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.ctex"
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_j05r2"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_dcxcv"]
+load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.ctex"
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_3rml2"]
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_nndrs"]
+load_path = "res://.godot/imported/film.png-e6b8f281c3c6f73b8623425f9592ea71.ctex"
 
-[node name="Deduction" type="Control" unique_id=179710515]
+[node name="Deduction" type="Control" unique_id=1164762683 groups=["world_container"]]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+script = ExtResource("1_teq53")
 
 [node name="Background" type="TextureRect" parent="." unique_id=2106629062]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 3840.0
+offset_bottom = 2160.0
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_h20no")
 
-[node name="Event1" type="Panel" parent="." unique_id=675416272]
-custom_minimum_size = Vector2(640, 480)
+[node name="film_bg1" type="TextureRect" parent="." unique_id=2118641058]
 layout_mode = 0
-offset_left = 2989.0
-offset_top = 957.0
-offset_right = 3629.0
-offset_bottom = 1437.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+offset_left = 2306.0
+offset_top = -1016.00006
+offset_right = 6747.4697
+offset_bottom = -126.95453
+rotation = 2.102368
+mouse_filter = 2
+texture = SubResource("CompressedTexture2D_j05r2")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="Event1" unique_id=1665599937]
+[node name="film_option_1" type="TextureRect" parent="." unique_id=283359633]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 3316.9998
+offset_top = -312.0
+offset_right = 7758.4697
+offset_bottom = 577.04553
+rotation = 2.59613
+mouse_filter = 2
+texture = SubResource("CompressedTexture2D_3rml2")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Event2" type="Panel" parent="." unique_id=364825361]
-custom_minimum_size = Vector2(640, 480)
+[node name="character" type="TextureRect" parent="." unique_id=625969952]
 layout_mode = 0
-offset_left = 2721.0
-offset_right = 3361.0
-offset_bottom = 480.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+mouse_filter = 2
+texture = ExtResource("4_3rml2")
 
-[node name="Label" type="Label" parent="Event2" unique_id=752975396]
+[node name="film_bg2" type="TextureRect" parent="." unique_id=815534846]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 4570.0
+offset_top = -509.0
+offset_right = 9011.47
+offset_bottom = 380.04553
+rotation = 2.0039907
+mouse_filter = 2
+texture = SubResource("CompressedTexture2D_dcxcv")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Event3" type="Panel" parent="." unique_id=2073433887]
-custom_minimum_size = Vector2(640, 480)
+[node name="film_option_2" type="TextureRect" parent="." unique_id=1905603591]
 layout_mode = 0
-offset_left = 201.0
-offset_top = 934.0
-offset_right = 841.0
-offset_bottom = 1414.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
+offset_left = 4989.0
+offset_top = 891.00006
+offset_right = 9430.471
+offset_bottom = 1780.0457
+rotation = 2.5777938
+texture = SubResource("CompressedTexture2D_nndrs")
+expand_mode = 1
+stretch_mode = 5
 
-[node name="Label" type="Label" parent="Event3" unique_id=798872624]
+[node name="OptionContainer" type="Control" parent="." unique_id=586973259]
+visible = false
+anchors_preset = 0
+
+[node name="OptionAButton" type="Button" parent="OptionContainer" unique_id=1876821939]
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 315.0
+offset_top = 643.0
+offset_right = 1105.0
+offset_bottom = 1236.0
+rotation = -0.54628783
+scale = Vector2(0.99999994, 0.99999994)
 
-[node name="Event4" type="Panel" parent="." unique_id=379031247]
-custom_minimum_size = Vector2(640, 480)
+[node name="OptionBButton" type="Button" parent="OptionContainer" unique_id=222947288]
 layout_mode = 0
-offset_left = 561.0
-offset_right = 1201.0
-offset_bottom = 480.0
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="Event4" unique_id=699134050]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="OrderedSlot" type="HBoxContainer" parent="." unique_id=797740360]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -1399.0
-offset_top = 429.0
-offset_right = 1401.0
-offset_bottom = 909.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_constants/separation = 80
-
-[node name="Slot1" type="Panel" parent="OrderedSlot" unique_id=648292342]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_h20no")
-
-[node name="Label" type="Label" parent="OrderedSlot/Slot1" unique_id=1090871774]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Slot2" type="Panel" parent="OrderedSlot" unique_id=796500401]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_teq53")
-
-[node name="Label" type="Label" parent="OrderedSlot/Slot2" unique_id=314477126]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Slot3" type="Panel" parent="OrderedSlot" unique_id=115388131]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_j05r2")
-
-[node name="Label" type="Label" parent="OrderedSlot/Slot3" unique_id=307889018]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
-
-[node name="Slot4" type="Panel" parent="OrderedSlot" unique_id=1585709560]
-custom_minimum_size = Vector2(640, 480)
-layout_mode = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_3rml2")
-
-[node name="Label" type="Label" parent="OrderedSlot/Slot4" unique_id=2123656989]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+offset_left = 2756.0
+offset_top = 1425.9999
+offset_right = 3546.0
+offset_bottom = 2018.9999
+rotation = -0.5637415

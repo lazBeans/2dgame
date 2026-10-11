@@ -1,0 +1,6 @@
+Prologue
+[signal arg="unlock_evidence: hoop_mark"]
+[signal arg="unlock_evidence: dusty_scale"]
+[signal arg="unlock_evidence: notes"]
+[signal arg="unlock_evidence: notes2"]
+[signal arg="change_scene: game"]

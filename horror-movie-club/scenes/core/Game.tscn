@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://df7hudvv2muvt"]
 
-[ext_resource type="PackedScene" uid="uid://cs4su75h6auj2" path="res://scenes/ui/DetectiveBoard.tscn" id="1_td7m5"]
+[ext_resource type="PackedScene" uid="uid://cs4su75h6auj2" path="res://scenes/ui/detective_board/DetectiveBoard.tscn" id="1_td7m5"]
 
 [sub_resource type="GDScript" id="GDScript_ve7bo"]
 script/source = "extends Node2D
@@ -9,7 +9,10 @@ script/source = "extends Node2D
 [node name="Game" type="Node2D" unique_id=13086844]
 script = SubResource("GDScript_ve7bo")
 
-[node name="WorldContainer" type="Node2D" parent="." unique_id=1788578649]
+[node name="WorldContainer" type="Node2D" parent="." unique_id=1788578649 groups=["world_container"]]
+unique_name_in_owner = true
+
+[node name="DetectiveBoard" parent="." unique_id=1384433856 groups=["detective_board"] instance=ExtResource("1_td7m5")]
 
 [node name="MainHUD" type="CanvasLayer" parent="." unique_id=920082924]
 
@@ -66,5 +69,3 @@ layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-
-[node name="DetectiveBoard" parent="." unique_id=1384433856 instance=ExtResource("1_td7m5")]

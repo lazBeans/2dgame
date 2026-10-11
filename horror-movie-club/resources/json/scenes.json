@@ -1,5 +1,7 @@
 {
 	"game": "res://scenes/core/Game.tscn",
-	"combat": "res://scenes/stages/combat_arena.tscn",
-	"deduction": "res://scenes/stages/Deduction.tscn"
+	"combat": "res://scenes/stages/CombatArena.tscn",
+	"deduction": "res://scenes/stages/Deduction.tscn",
+	"roombase": "res://scenes/stages/RoomBase.tscn",
+	"mainmenu": "res://scenes/ui/main_menu/MainMenu.tscn"
 }

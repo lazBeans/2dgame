@@ -6,31 +6,39 @@ extends Node
 # ==========================================
 # SIGNALS
 # ==========================================
+
+## Emitted when a global drag operation starts.
 signal drag_started(item_data: Variant)
+
+## Emitted when a global drag operation finishes with success status.
 signal drag_ended(item_data: Variant, drop_successful: bool)
 
 # ==========================================
 # STATE VARIABLES
 # ==========================================
+
+## Cached data payload of the item currently being dragged.
 var current_drag_data: Variant = null
+
+## Flag indicating whether a drag operation is currently active.
 var is_active_dragging: bool = false
 
 # ==========================================
 # DRAG CONTROL & STATE MANAGEMENT
 # ==========================================
 
-## Begins a drag operation, caching the payload.
+## Begins a drag operation, caching the payload and emitting drag_started.
 func start_drag(item_data: Variant) -> void:
 	current_drag_data = item_data
 	is_active_dragging = true
-	emit_signal("drag_started", item_data)
+	drag_started.emit(item_data)
 
-## Ends the current drag operation and registers success state.
+## Ends the current drag operation, clears state, and emits drag_ended.
 func end_drag(drop_successful: bool) -> void:
-	var item = current_drag_data
+	var item: Variant = current_drag_data
 	current_drag_data = null
 	is_active_dragging = false
-	emit_signal("drag_ended", item, drop_successful)
+	drag_ended.emit(item, drop_successful)
 
 ## Returns true if an item is currently being dragged anywhere in the game.
 func has_active_drag() -> bool:

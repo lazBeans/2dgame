@@ -1,9 +1,12 @@
 {
-	"chapter_1":{
-		"title": "qilin",
-		"required_segments": [
-			"morphology",
-			"diet"
-			]
+	"chapter_1":{ 
+		"morphology": {
+				"correct": "res://resources/segments/morphology_correct.tres",
+				"wrong": "res://resources/segments/morphology_wrong.tres"
+		},
+		"diet" : {
+				"correct": "res://resources/segments/diet_correct.tres",
+				"wrong": "res://resources/segments/diet_wrong.tres"
+		}
 	}
 }
