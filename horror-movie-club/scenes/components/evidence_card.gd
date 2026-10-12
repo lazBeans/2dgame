@@ -37,7 +37,7 @@ func setup(id: String) -> void:
 			if background and "texture" in evidence_data and evidence_data.texture:
 				background.texture = evidence_data.texture
 			if label and "evidence_name" in evidence_data:
-				label.text = evidence_data.evidence_name
+				label.text = evidence_data.name
 
 # ==========================================
 # OVERRIDDEN DRAG BEHAVIOR

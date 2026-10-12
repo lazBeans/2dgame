@@ -1,4 +1,8 @@
 {
 	"dusty_scale:hoop_mark": "timeline_ch1_scale_and_hoop",
-	"notes:notes2": "timeline_ch1_what_went_missing"
+	"notes:notes2": "timeline_ch1_what_went_missing",
+	"dusty_scale:qilin": "qilin_1",
+	"hoop_makr:qilin": "qilin_2",
+	"notes:qilin": "qilin_3",
+	"notes2:qilin": "qilin_4"
 }

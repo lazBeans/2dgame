@@ -6,5 +6,6 @@
 [resource]
 script = ExtResource("1_j8wtv")
 id = "notes"
+type = "evidence"
 texture = ExtResource("2_j541s")
 metadata/_custom_type_script = "uid://ccl6tt1eg2l6m"

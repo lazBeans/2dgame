@@ -6,7 +6,9 @@ class_name EvidenceData
 @export var id: String = ""
 
 ## The human-readable name of the evidence displayed in the inventory slots and cards.
-@export var evidence_name: String = ""
+@export var name: String = ""
+
+@export var type: String = ""
 
 ## Detailed notes, clues, or description text associated with this piece of evidence.
 @export_multiline var description: String = ""

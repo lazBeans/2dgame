@@ -1,11 +1,11 @@
-[gd_resource type="Resource" script_class="Culprits" format=3 uid="uid://bbtiygwy0nym8"]
+[gd_resource type="Resource" script_class="EvidenceData" format=3 uid="uid://rq4sa27hjgak"]
 
-[ext_resource type="Script" uid="uid://bcqhjhvvf7w0w" path="res://resources/evidences/culprits.gd" id="1_mlplv"]
-[ext_resource type="Texture2D" uid="uid://faymsntoqq5l" path="res://assets/textures/evidence/dusty_scale.png" id="2_okjvr"]
+[ext_resource type="Script" uid="uid://ccl6tt1eg2l6m" path="res://resources/evidences/evidence_data.gd" id="1_kcbmu"]
+[ext_resource type="Texture2D" uid="uid://faymsntoqq5l" path="res://assets/textures/evidence/dusty_scale.png" id="2_b6iw5"]
 
 [resource]
-script = ExtResource("1_mlplv")
+script = ExtResource("1_kcbmu")
 id = "qilin"
-description = "Qilin"
-texture = ExtResource("2_okjvr")
-metadata/_custom_type_script = "uid://bcqhjhvvf7w0w"
+type = "culprit"
+texture = ExtResource("2_b6iw5")
+metadata/_custom_type_script = "uid://ccl6tt1eg2l6m"

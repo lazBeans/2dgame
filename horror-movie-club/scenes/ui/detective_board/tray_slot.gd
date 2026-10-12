@@ -66,9 +66,10 @@ func get_card_id() -> String:
 
 ## Instantiates and attaches the deduction trigger button inside the slot.
 func spawn_deduction_button() -> void:
+	
 	if not deduction_button_scene:
 		deduction_button_scene = preload("res://scenes/components/DeductionButton.tscn") as PackedScene
-
+		
 	if deduction_button_scene and (not active_button or not is_instance_valid(active_button)):
 		clear_slot()
 		active_button = deduction_button_scene.instantiate()

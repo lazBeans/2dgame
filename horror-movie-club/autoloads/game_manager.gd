@@ -13,6 +13,7 @@ var pending_evidence_queue: Array[String] = []
 ## Current chapter identifier string.
 var current_chapter: String = "chapter_1"
 
+
 # ==========================================
 # INITIALIZATION & SETUP
 # ==========================================
