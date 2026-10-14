@@ -9,6 +9,7 @@ class_name ThreadContainer
 
 var selected_pins: Array = []
 var active_connections: Array = []
+var valid_culprit_evidences: Array = []
 var required_segments: Dictionary = {}
 var valid_connections: Dictionary = {}
 
@@ -32,7 +33,7 @@ func _ready() -> void:
 	if Engine.has_singleton("FileManager") or get_node_or_null("/root/FileManager"):
 		valid_connections = FileManager.valid_connections
 		required_segments = FileManager.load_required_segments(GameManager.current_chapter)
-	
+		
 	temp_line = Line2D.new()
 	temp_line.width = 4.0
 	temp_line.default_color = Color("#e63946")
@@ -81,13 +82,13 @@ func _process(_delta: float) -> void:
 # ==========================================
 
 ## Called by EvidenceCards when their pin button is clicked. Manages selection state.
-func _on_pin_clicked(card_id: String, pin_node: Control) -> void:
+func _on_pin_clicked(card_id: String, card_type:String, pin_node: Control) -> void:
 	if not visible:
 		return
 		
 	# First pin selected
 	if selected_pins.size() == 0:
-		selected_pins.append({"id": card_id, "pin": pin_node})
+		selected_pins.append({"id": card_id, "type": card_type, "pin": pin_node})
 		if temp_line:
 			temp_line.visible = true
 			var start_pos: Vector2 = line_parent.to_local(pin_node.get_global_rect().get_center())
@@ -104,9 +105,17 @@ func _on_pin_clicked(card_id: String, pin_node: Control) -> void:
 			reset_connection_state()
 			return
 			
-		var second_selection := {"id": card_id, "pin": pin_node}
-		validate_and_resolve_connection(first_selection, second_selection)
-		reset_connection_state()
+		var second_selection := {"id": card_id, "type": card_type, "pin": pin_node}
+		
+		if first_selection["type"] == "evidence" and second_selection["type"] == "evidence":
+			validate_and_resolve_connection(first_selection, second_selection)
+			reset_connection_state()
+		elif first_selection["type"] == "culprit":
+			validate_culprit_connection(first_selection, second_selection)
+			reset_connection_state()
+		elif second_selection["type"] == "culprit":
+			validate_culprit_connection(second_selection, first_selection)
+			reset_connection_state()
 
 ## Validates if two selected pins form a valid evidence pair and triggers associated timelines/signals.
 func validate_and_resolve_connection(pin_a: Dictionary, pin_b: Dictionary) -> void:
@@ -124,6 +133,16 @@ func validate_and_resolve_connection(pin_a: Dictionary, pin_b: Dictionary) -> vo
 			if active_connections.size() == required_segments.size():
 				if Engine.has_singleton("SignalBus") or get_node_or_null("/root/SignalBus"):
 					SignalBus.all_segments_unlocked.emit(valid_connections[connection_key])
+
+func validate_culprit_connection(culprit: Dictionary, evidence: Dictionary) -> void:
+	valid_culprit_evidences = FileManager.load_specific_culprit(culprit["id"])
+	
+	if valid_culprit_evidences.size() > 0:
+		if valid_culprit_evidences.has(evidence["id"]):
+			valid_culprit_evidences.erase(evidence["id"])
+			spawn_permanent_line(culprit["pin"], evidence["pin"])
+	if valid_culprit_evidences.size() == 0:
+		Dialogic.start(GameManager.current_chapter + "_final_timeline")
 
 # ==========================================
 # VISUAL LINE RENDERING & CLEANUP

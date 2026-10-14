@@ -10,6 +10,8 @@ class_name EvidenceCard
 ## Unique identifier string referencing the evidence resource file.
 var evidence_identifier: String = ""
 
+var evidence_type: String = ""
+
 @onready var background: NinePatchRect = $Background
 @onready var label: Label = $Label
 @onready var pin_button: TextureButton = $PinButton
@@ -36,8 +38,10 @@ func setup(id: String) -> void:
 		if evidence_data:
 			if background and "texture" in evidence_data and evidence_data.texture:
 				background.texture = evidence_data.texture
-			if label and "evidence_name" in evidence_data:
+			if label and "name" in evidence_data:
 				label.text = evidence_data.name
+			if "type" in evidence_data:
+				evidence_type = evidence_data.type
 
 # ==========================================
 # OVERRIDDEN DRAG BEHAVIOR
@@ -63,6 +67,6 @@ func stop_dragging() -> void:
 func _on_pin_pressed() -> void:
 	var thread_container: Node = get_tree().get_first_node_in_group("thread_container")
 	if thread_container and thread_container.has_method("_on_pin_clicked"):
-		thread_container._on_pin_clicked(evidence_identifier, pin_button)
+		thread_container._on_pin_clicked(evidence_identifier, evidence_type, pin_button)
 	else:
 		push_error("Evidence Card: Could not find Thread container!")

@@ -34,10 +34,6 @@ directories/dtl_directory={
 "end_chapter_1": "res://timelines/ch_1/end_chapter_1.dtl",
 "game_over": "res://timelines/ch_1/game_over.dtl",
 "prologue": "res://timelines/ch_1/prologue.dtl",
-"qilin_1": "res://timelines/qilin_1.dtl",
-"qilin_2": "res://timelines/qilin_2.dtl",
-"qilin_3": "res://timelines/qilin_3.dtl",
-"qilin_4": "res://timelines/qilin_4.dtl",
 "timeline_ch1_scale_and_hoop": "res://timelines/ch_1/timeline_ch1_scale_and_hoop.dtl",
 "timeline_ch1_what_went_missing": "res://timelines/ch_1/timeline_ch1_what_went_missing.dtl",
 "try_again": "res://timelines/ch_1/try_again.dtl"

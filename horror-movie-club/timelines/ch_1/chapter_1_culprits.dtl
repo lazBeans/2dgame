@@ -1,6 +1,6 @@
 Chapter 1 Culprits
-[signal arg="change_sub_scene: game"]
-set {tries} = 3.0
+[signal arg="change_sub_scene: roombase"]
+set {tries} = 2.0
 label Point1
 if {tries} > 0.0:
 	Who done it?
