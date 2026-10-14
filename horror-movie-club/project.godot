@@ -20,7 +20,6 @@ config/icon="res://icon.svg"
 GameManager="*uid://ba4q38luhw7qc"
 SignalBus="*uid://cbd66lerbnjvf"
 FileManager="*uid://c87hwmi38r5y5"
-DragManager="*uid://m36sb3yfk5yp"
 RoomManager="*uid://dtyxijvfqa1dc"
 Dialogic="*uid://ds2q0uclmolvu"
 

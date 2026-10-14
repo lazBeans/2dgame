@@ -14,8 +14,6 @@ signal board_toggled(is_open: bool)
 @onready var board_container: Node = find_child("BoardContainer")
 @onready var tray_slot: DetectiveSlotBase = find_child("TraySlot") as DetectiveSlotBase
 
-var stored_final_timeline: String = ""
-
 # ==========================================
 # INITIALIZATION & SIGNAL LISTENERS
 # ==========================================
