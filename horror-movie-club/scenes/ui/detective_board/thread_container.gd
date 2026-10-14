@@ -135,7 +135,7 @@ func validate_and_resolve_connection(pin_a: Dictionary, pin_b: Dictionary) -> vo
 					SignalBus.all_segments_unlocked.emit(valid_connections[connection_key])
 
 func validate_culprit_connection(culprit: Dictionary, evidence: Dictionary) -> void:
-	valid_culprit_evidences = FileManager.load_specific_culprit(culprit["id"])
+	valid_culprit_evidences.append(FileManager.load_specific_culprit(culprit["id"]))
 	
 	if valid_culprit_evidences.size() > 0:
 		if valid_culprit_evidences.has(evidence["id"]):
