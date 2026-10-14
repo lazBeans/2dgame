@@ -14,7 +14,7 @@ signal boss_button_pressed
 @export var action_button_scene: PackedScene
 var active_button: Node = null
 
-enum button_type {DEDUCTION, BOSS}
+enum ButtonType {DEDUCTION, BOSS}
 
 # ==========================================
 # INITIALIZATION & PROCESS
@@ -68,7 +68,7 @@ func get_card_id() -> String:
 # ==========================================
 
 ## Instantiates and attaches the deduction trigger button inside the slot.
-func spawn_action_button(current_button: String) -> void:
+func spawn_action_button(current_button: ButtonType) -> void:
 	
 	if not action_button_scene:
 		action_button_scene = preload("res://scenes/components/ActionButton.tscn") as PackedScene
@@ -88,10 +88,10 @@ func spawn_action_button(current_button: String) -> void:
 			btn = active_button.get_node("ActionButton") as BaseButton
 		
 		match current_button:
-			button_type.DEDUCTION:
+			ButtonType.DEDUCTION:
 				if btn and not btn.pressed.is_connected(_on_deduction_pressed):
 					btn.pressed.connect(_on_deduction_pressed)
-			button_type.BOSS:
+			ButtonType.BOSS:
 				if btn and not btn.pressed.is_connected(_on_boss_pressed):
 					btn.pressed.connect(_on_boss_pressed)
 
