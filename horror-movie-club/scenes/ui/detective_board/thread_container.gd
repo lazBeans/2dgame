@@ -142,7 +142,7 @@ func validate_culprit_connection(culprit: Dictionary, evidence: Dictionary) -> v
 			valid_culprit_evidences.erase(evidence["id"])
 			spawn_permanent_line(culprit["pin"], evidence["pin"])
 	if valid_culprit_evidences.size() == 0:
-		Dialogic.start(GameManager.current_chapter + "_final_timeline")
+		SignalBus.all_evidence_connected.emit()
 
 # ==========================================
 # VISUAL LINE RENDERING & CLEANUP

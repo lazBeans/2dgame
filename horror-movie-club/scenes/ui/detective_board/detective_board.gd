@@ -25,6 +25,7 @@ func _ready() -> void:
 	visible = false
 	
 	SignalBus.all_segments_unlocked.connect(_on_all_segments_unlocked)
+	SignalBus.all_evidence_connected.connect(_on_boss_unlocked)
 	SignalBus.evidence_queued.connect(_on_manager_evidence_queued)
 	SignalBus.board_reset.connect(_on_manager_board_reset)
 	
@@ -32,7 +33,7 @@ func _ready() -> void:
 		tray_slot.slot_emptied.connect(_on_tray_emptied)
 		if "deduction_button_pressed" in tray_slot:
 			tray_slot.deduction_button_pressed.connect(_on_start_deduction_pressed)
-		elif if "boss_button_pressed" in tray_slot:
+		if "boss_button_pressed" in tray_slot:
 			tray_slot.deduction_button_pressed.connect(_on_start_boss_pressed)
 		
 	call_deferred("update_tray")
@@ -154,7 +155,12 @@ func clear_board_visuals() -> void:
 func _on_all_segments_unlocked(connection_data: Variant) -> void:
 	stored_final_timeline = str(connection_data)
 	if tray_slot and tray_slot.has_method("spawn_action_button"):
-		tray_slot.spawn_action_button()
+		tray_slot.spawn_action_button("DEDUCTION")
+		
+## Stores the timeline data and triggers deduction button creation on puzzle completion.
+func _on_boss_unlocked() -> void:
+	if tray_slot and tray_slot.has_method("spawn_action_button"):
+		tray_slot.spawn_action_button("BOSS")
 
 ## Launches the chapter deduction dialogue timeline via Dialogic.
 func _on_start_deduction_pressed() -> void:
@@ -164,7 +170,7 @@ func _on_start_deduction_pressed() -> void:
 ## Launches the chapter deduction dialogue timeline via Dialogic.
 func _on_start_boss_pressed() -> void:
 	var boss_timeline: String = GameManager.current_chapter + "_deduction"
-	Dialogic.start(deduction_timeline)
+	Dialogic.start(boss_timeline)
 
 ## Refreshes tray contents when new evidence is queued in GameManager.
 func _on_manager_evidence_queued(_evidence_id: String) -> void:

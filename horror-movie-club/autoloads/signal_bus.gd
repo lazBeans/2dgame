@@ -21,3 +21,5 @@ signal all_segments_unlocked(connection_data: Variant)
 
 ## Emitted when the detective board UI is opened or closed.
 signal board_toggled(is_open: bool)
+
+signal all_evidence_connected
