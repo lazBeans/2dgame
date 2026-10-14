@@ -1,2 +1,3 @@
 [signal arg="entity: qilin"]
+[Scene Recreated]
 [signal arg="change_scene: combat"]

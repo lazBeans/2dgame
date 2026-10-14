@@ -6,5 +6,6 @@
 [resource]
 script = ExtResource("1_aptek")
 id = "dusty_scale"
+type = "evidence"
 texture = ExtResource("1_8ffft")
 metadata/_custom_type_script = "uid://ccl6tt1eg2l6m"

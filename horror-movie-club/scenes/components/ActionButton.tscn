@@ -1,17 +1,14 @@
 [gd_scene format=3 uid="uid://bqn21n8w582rn"]
 
-[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_1vi8f"]
-
-[node name="DeductionButton" type="Panel" unique_id=1218398898]
+[node name="ActionButton" type="TextureButton" unique_id=1405642546]
 custom_minimum_size = Vector2(270, 190)
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = SubResource("StyleBoxEmpty_1vi8f")
 
-[node name="Button" type="Button" parent="." unique_id=1625553593]
+[node name="Label" type="Label" parent="." unique_id=1486713761]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

@@ -9,9 +9,12 @@ class_name TraySlot
 
 ## Emitted when the spawned deduction button is clicked.
 signal deduction_button_pressed
+signal boss_button_pressed
 
-@export var deduction_button_scene: PackedScene
+@export var action_button_scene: PackedScene
 var active_button: Node = null
+
+enum ButtonType {DEDUCTION, BOSS}
 
 # ==========================================
 # INITIALIZATION & PROCESS
@@ -65,31 +68,45 @@ func get_card_id() -> String:
 # ==========================================
 
 ## Instantiates and attaches the deduction trigger button inside the slot.
-func spawn_deduction_button() -> void:
-	if not deduction_button_scene:
-		deduction_button_scene = preload("res://scenes/components/DeductionButton.tscn") as PackedScene
-
-	if deduction_button_scene and (not active_button or not is_instance_valid(active_button)):
+func spawn_action_button(current_button: ButtonType) -> void:
+	
+	if not action_button_scene:
+		action_button_scene = preload("res://scenes/components/ActionButton.tscn") as PackedScene
+		
+	if action_button_scene and (not active_button or not is_instance_valid(active_button)):
 		clear_slot()
-		active_button = deduction_button_scene.instantiate()
+		active_button = action_button_scene.instantiate()
 		add_child(active_button)
 
 		if active_button is Control:
 			active_button.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 
-		var btn: Button = null
-		if active_button is Button:
+		var btn: BaseButton = null
+		if active_button is BaseButton:
 			btn = active_button
-		elif active_button.has_node("Button"):
-			btn = active_button.get_node("Button") as Button
-
-		if btn and not btn.pressed.is_connected(_on_deduction_pressed):
-			btn.pressed.connect(_on_deduction_pressed)
+		elif active_button.has_node("ActionButton"):
+			btn = active_button.get_node("ActionButton") as BaseButton
+		
+		match current_button:
+			ButtonType.DEDUCTION:
+				if btn and not btn.pressed.is_connected(_on_deduction_pressed):
+					btn.pressed.connect(_on_deduction_pressed)
+			ButtonType.BOSS:
+				if btn and not btn.pressed.is_connected(_on_boss_pressed):
+					btn.pressed.connect(_on_boss_pressed)
 
 ## Emits deduction_button_pressed signal when the deduction button is pressed.
 func _on_deduction_pressed() -> void:
 	deduction_button_pressed.emit()
-	var child_to_remove = get_node_or_null("DeductionButton")
+	var child_to_remove = get_node_or_null("ActionButton")
 	if child_to_remove:
 		child_to_remove.queue_free()
+		
+## Emits deduction_button_pressed signal when the deduction button is pressed.
+func _on_boss_pressed() -> void:
+	boss_button_pressed.emit()
+	var child_to_remove = get_node_or_null("ActionButton")
+	if child_to_remove:
+		child_to_remove.queue_free()
+	
 	

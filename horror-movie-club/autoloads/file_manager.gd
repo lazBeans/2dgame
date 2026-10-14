@@ -18,7 +18,7 @@ var deduction_master_data: Dictionary = {}
 ## Current location context string.
 var location: String = ""
 
-var current_ch = GameManager.current_chapter
+var culprit_to_evidence: Dictionary = {}
 
 # ==========================================
 # INITIALIZATION
@@ -29,6 +29,7 @@ func _ready() -> void:
 	load_connections_from_file("res://resources/json/case_connections.json")
 	load_scenes_from_file("res://resources/json/scenes.json")
 	load_deduction_master_from_file("res://resources/json/deduction_master_list.json")
+	load_culprit_to_evidence("res://resources/json/culprit_to_evidence.json")
 
 # ==========================================
 # DATA LOADING HELPERS
@@ -60,6 +61,11 @@ func load_deduction_master_from_file(path: String) -> void:
 	var parsed_result: Variant = load_json_file(path)
 	if parsed_result is Dictionary:
 		deduction_master_data = parsed_result
+		
+func load_culprit_to_evidence(path: String) -> void:
+	var parsed_result: Variant = load_json_file(path)
+	if parsed_result is Dictionary:
+		culprit_to_evidence = parsed_result
 
 # ==========================================
 # DATA GETTERS
@@ -76,3 +82,8 @@ func load_required_segments(chapter_key: String) -> Dictionary:
 	if deduction_master_data.has(chapter_key):
 		return deduction_master_data[chapter_key]
 	return {}
+	
+func load_specific_culprit(culprit_id: String) -> Array:
+	if culprit_to_evidence.has(culprit_id):
+		return culprit_to_evidence[culprit_id]
+	return []
