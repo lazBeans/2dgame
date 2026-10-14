@@ -138,11 +138,13 @@ func validate_culprit_connection(culprit: Dictionary, evidence: Dictionary) -> v
 	valid_culprit_evidences = FileManager.load_specific_culprit(culprit["id"])
 	
 	if valid_culprit_evidences.size() > 0:
-		if valid_culprit_evidences.has(evidence["id"]):
+		if valid_culprit_evidences.has(evidence["id"]) and not connections.has(evidence["id"]):
 			connections.append(evidence["id"])
 			spawn_permanent_line(culprit["pin"], evidence["pin"])
-	if connections.size() == valid_culprit_evidences.size():
-		SignalBus.all_evidence_connected.emit()
+			
+			if connections.size() == valid_culprit_evidences.size():
+				SignalBus.all_evidence_connected.emit()
+				Dialogic.start(GameManager.current_chapter + "_culprit")
 
 # ==========================================
 # VISUAL LINE RENDERING & CLEANUP

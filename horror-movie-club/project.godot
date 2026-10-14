@@ -27,6 +27,7 @@ Dialogic="*uid://ds2q0uclmolvu"
 
 directories/dch_directory={}
 directories/dtl_directory={
+"chapter_1_culprit": "res://timelines/ch_1/chapter_1_culprit.dtl",
 "chapter_1_culprits": "res://timelines/ch_1/chapter_1_culprits.dtl",
 "chapter_1_deduction": "res://timelines/ch_1/chapter_1_deduction.dtl",
 "chapter_1_final_timeline": "res://timelines/ch_1/chapter_1_final_timeline.dtl",
