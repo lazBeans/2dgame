@@ -20,8 +20,6 @@ var location: String = ""
 
 var culprit_to_evidence: Dictionary = {}
 
-var current_ch = GameManager.current_chapter
-
 # ==========================================
 # INITIALIZATION
 # ==========================================

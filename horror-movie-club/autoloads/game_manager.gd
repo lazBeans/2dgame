@@ -41,13 +41,13 @@ func _on_dialogic_signal(argument: Variant) -> void:
 	if arg_str.begins_with("unlock_evidence:"):
 		var evidence_id: String = arg_str.get_slice(":", 1).strip_edges()
 		pending_evidence_queue.append(evidence_id)
-		if SignalBus.has_user_signal("evidence_queued"):
+		if SignalBus.has_signal("evidence_queued"):
 			SignalBus.evidence_queued.emit(evidence_id)
 			
 	elif arg_str.begins_with("unlock_culprit:"):
 		var culprit_id: String = arg_str.get_slice(":", 1).strip_edges()
 		pending_evidence_queue.append(culprit_id)
-		if SignalBus.has_user_signal("evidence_queued"):
+		if SignalBus.has_signal("evidence_queued"):
 			SignalBus.evidence_queued.emit(culprit_id)
 		
 	# Handles transitioning to a new scene using keys defined in scenes.json
@@ -73,7 +73,7 @@ func _on_dialogic_signal(argument: Variant) -> void:
 	elif arg_str.begins_with("set_chapter:"):
 		var chapter_num: String = arg_str.get_slice(":", 1).strip_edges()
 		current_chapter = chapter_num
-		if SignalBus.has_user_signal("chapter_changed"):
+		if SignalBus.has_signal("chapter_changed"):
 			SignalBus.chapter_changed.emit(current_chapter)
 			SignalBus.board_reset.emit()
 

@@ -30,9 +30,9 @@ func _ready() -> void:
 	line_parent = Node2D.new()
 	add_child(line_parent)
 	
-	if Engine.has_singleton("FileManager") or get_node_or_null("/root/FileManager"):
-		valid_connections = FileManager.valid_connections
-		required_segments = FileManager.load_required_segments(GameManager.current_chapter)
+	
+	valid_connections = FileManager.valid_connections
+	required_segments = FileManager.load_required_segments(GameManager.current_chapter)
 		
 	temp_line = Line2D.new()
 	temp_line.width = 4.0
@@ -127,12 +127,11 @@ func validate_and_resolve_connection(pin_a: Dictionary, pin_b: Dictionary) -> vo
 		if valid_connections.has(connection_key):
 			spawn_permanent_line(pin_a["pin"], pin_b["pin"])
 			active_connections.push_back(connection_key)
-			if Engine.has_singleton("Dialogic") or get_node_or_null("/root/Dialogic"):
-				Dialogic.start(valid_connections[connection_key])
+			
+			Dialogic.start(valid_connections[connection_key])
 					
 			if active_connections.size() == required_segments.size():
-				if Engine.has_singleton("SignalBus") or get_node_or_null("/root/SignalBus"):
-					SignalBus.all_segments_unlocked.emit(valid_connections[connection_key])
+				SignalBus.all_segments_unlocked.emit(valid_connections[connection_key])
 
 func validate_culprit_connection(culprit: Dictionary, evidence: Dictionary) -> void:
 	valid_culprit_evidences.append(FileManager.load_specific_culprit(culprit["id"]))

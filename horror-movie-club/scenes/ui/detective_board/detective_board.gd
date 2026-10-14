@@ -153,7 +153,6 @@ func clear_board_visuals() -> void:
 
 ## Stores the timeline data and triggers deduction button creation on puzzle completion.
 func _on_all_segments_unlocked(connection_data: Variant) -> void:
-	stored_final_timeline = str(connection_data)
 	if tray_slot and tray_slot.has_method("spawn_action_button"):
 		tray_slot.spawn_action_button(TraySlot.ButtonType.DEDUCTION)
 		
