@@ -32,9 +32,9 @@ func _ready() -> void:
 	if tray_slot:
 		tray_slot.slot_emptied.connect(_on_tray_emptied)
 		if "deduction_button_pressed" in tray_slot:
-			tray_slot.action_button_pressed.connect(_on_start_deduction_pressed)
+			tray_slot.deduction_button_pressed.connect(_on_start_deduction_pressed)
 		if "boss_button_pressed" in tray_slot:
-			tray_slot.action_button_pressed.connect(_on_start_boss_pressed)
+			tray_slot.boss_button_pressed.connect(_on_start_boss_pressed)
 		
 	call_deferred("update_tray")
 
