@@ -96,9 +96,17 @@ func load_specific_culprit(culprit_id: String) -> Array:
 		return culprit_to_evidence[culprit_id]
 	return []
 
-func load_background() -> String:
+func get_display_name() -> String:
 	if rooms.has(current_rm):
-		if rooms.has("path"):
-			return rooms.get(current_rm).get("path")
+		var room_data = rooms.get(current_rm)
+		if room_data.has("display_name"):
+			return room_data.get("display_name")
+	return ""
+
+func get_background() -> String:
+	if rooms.has(current_rm):
+		var room_data = rooms.get(current_rm)
+		if room_data.has("path"):
+			return room_data.get("path")
 	return ""
 			
