@@ -6,6 +6,8 @@ extends Node
 # DATA CACHES
 # ==========================================
 
+var current_rm = RoomManager.current_room
+
 ## Caches pair connection mappings loaded from JSON.
 var valid_connections: Dictionary = {}
 
@@ -15,8 +17,7 @@ var scenes_data: Dictionary = {}
 ## Caches chapter deduction requirements and metadata.
 var deduction_master_data: Dictionary = {}
 
-## Current location context string.
-var location: String = ""
+var rooms: Dictionary = {}
 
 var culprit_to_evidence: Dictionary = {}
 
@@ -30,7 +31,8 @@ func _ready() -> void:
 	load_scenes_from_file("res://resources/json/scenes.json")
 	load_deduction_master_from_file("res://resources/json/deduction_master_list.json")
 	load_culprit_to_evidence("res://resources/json/culprit_to_evidence.json")
-
+	load_rooms_from_file("res://resources/rooms/rooms.json")
+	
 # ==========================================
 # DATA LOADING HELPERS
 # ==========================================
@@ -66,6 +68,12 @@ func load_culprit_to_evidence(path: String) -> void:
 	var parsed_result: Variant = load_json_file(path)
 	if parsed_result is Dictionary:
 		culprit_to_evidence = parsed_result
+			
+## Parses the current room into an array.
+func load_rooms_from_file(path: String) -> void:
+	var parsed_result: Variant = load_json_file(path)
+	if parsed_result is Dictionary:
+		rooms = parsed_result
 
 # ==========================================
 # DATA GETTERS
@@ -87,3 +95,10 @@ func load_specific_culprit(culprit_id: String) -> Array:
 	if culprit_to_evidence.has(culprit_id):
 		return culprit_to_evidence[culprit_id]
 	return []
+
+func load_background() -> String:
+	if rooms.has(current_rm):
+		if rooms.has("path"):
+			return rooms.get(current_rm).get("path")
+	return ""
+			

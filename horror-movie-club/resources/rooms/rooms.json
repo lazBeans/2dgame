@@ -1,0 +1,12 @@
+{
+	"clubhouse": {
+		"display_name": "Clubhouse",
+		"path": "res://resources/rooms/clubhouse.png",
+		"adjacent_rooms":["college_of_art_hallway"]
+	},
+	"college_of_art_hallway": {
+		"display_name": "College of Art Hallway",
+		"path": "res://resources/rooms/college_of_art_hallway.png",
+		"adjacent_rooms":["clubhouse"]
+	}
+}

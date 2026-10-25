@@ -1,3 +1,9 @@
 [gd_scene format=3 uid="uid://bfdyqrshfbydb"]
 
-[node name="RoomBase" type="Node2D" unique_id=1613499306 groups=["world_container"]]
+[node name="RoomBase" type="Control" unique_id=1957407758]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2

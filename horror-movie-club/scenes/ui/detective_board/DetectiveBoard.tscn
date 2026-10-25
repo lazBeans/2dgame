@@ -4,7 +4,6 @@
 [ext_resource type="Script" uid="uid://bojocr8m2dcht" path="res://scenes/ui/detective_board/detective_board.gd" id="1_qyx12"]
 [ext_resource type="Script" uid="uid://dvm0siand1tm7" path="res://scenes/ui/detective_board/thread_container.gd" id="2_4vbfl"]
 [ext_resource type="Script" uid="uid://dkomuvstka8pk" path="res://scenes/ui/detective_board/board_container.gd" id="2_fouw5"]
-[ext_resource type="PackedScene" uid="uid://bqn21n8w582rn" path="res://scenes/components/ActionButton.tscn" id="5_6yhua"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_d2q47"]
 
@@ -66,7 +65,6 @@ grow_horizontal = 2
 grow_vertical = 0
 theme_override_styles/panel = SubResource("StyleBoxEmpty_d2q47")
 script = ExtResource("1_855we")
-deduction_button_scene = ExtResource("5_6yhua")
 
 [node name="TextureRect" type="TextureRect" parent="TraySlot" unique_id=1162070173]
 layout_mode = 1

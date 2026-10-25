@@ -2,6 +2,8 @@ extends Node
 
 signal board_toggled(is_open: bool)
 
+var current_room: String = ""
+
 ## Container node inside Game.tscn where room and deduction sub-scenes are loaded
 var sub_scene_container: Node = null
 
@@ -22,26 +24,14 @@ func _initialize_default_scene() -> void:
 	if sub_scene_container and current_sub_scene == null:
 		change_sub_scene_by_key(default_scene_key)
 
-## Dynamic lookup to locate WorldContainer or SubSceneContainer in Game.tscn
+## Dynamic lookup to locate WorldContainer in Game.tscn
 func _ensure_container_reference() -> void:
 	if sub_scene_container != null and is_instance_valid(sub_scene_container):
 		return
 		
 	if get_tree() and get_tree().current_scene:
-		# 1. Search by node group "sub_scene_container"
-		sub_scene_container = get_tree().get_first_node_in_group("sub_scene_container")
-		
-		# 2. Search by unique node names %WorldContainer or %SubSceneContainer
 		if sub_scene_container == null and get_tree().current_scene.has_node("%WorldContainer"):
 			sub_scene_container = get_tree().current_scene.get_node("%WorldContainer")
-		elif sub_scene_container == null and get_tree().current_scene.has_node("%SubSceneContainer"):
-			sub_scene_container = get_tree().current_scene.get_node("%SubSceneContainer")
-			
-		# 3. Fallback search by node name across tree
-		if sub_scene_container == null:
-			sub_scene_container = get_tree().current_scene.find_child("WorldContainer", true, false)
-		if sub_scene_container == null:
-			sub_scene_container = get_tree().current_scene.find_child("SubSceneContainer", true, false)
 
 ## Main entry point - accepts either a scenes.json key or direct "res://" path
 func change_sub_scene(path_or_key: String) -> void:

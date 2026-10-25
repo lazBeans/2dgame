@@ -1,13 +1,9 @@
 [gd_scene format=3 uid="uid://df7hudvv2muvt"]
 
 [ext_resource type="PackedScene" uid="uid://cs4su75h6auj2" path="res://scenes/ui/detective_board/DetectiveBoard.tscn" id="1_td7m5"]
-
-[sub_resource type="GDScript" id="GDScript_ve7bo"]
-script/source = "extends Node2D
-"
+[ext_resource type="Script" uid="uid://curowpiw746gv" path="res://scenes/ui/status_hud.gd" id="2_2a2lh"]
 
 [node name="Game" type="Node2D" unique_id=13086844]
-script = SubResource("GDScript_ve7bo")
 
 [node name="WorldContainer" type="Node2D" parent="." unique_id=1788578649 groups=["world_container"]]
 unique_name_in_owner = true
@@ -18,26 +14,19 @@ unique_name_in_owner = true
 
 [node name="StatusHUD" type="Control" parent="MainHUD" unique_id=23718647]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("2_2a2lh")
 
 [node name="ClockDisplay" type="Label" parent="MainHUD/StatusHUD" unique_id=1225560791]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 23.0
 
-[node name="FilmGaugeMeter" type="Control" parent="MainHUD/StatusHUD" unique_id=279876450]
-anchors_preset = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
 [node name="PhoneButton" type="TextureButton" parent="MainHUD/StatusHUD" unique_id=830153599]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="AlertBadge" type="TextureRect" parent="MainHUD/StatusHUD/PhoneButton" unique_id=1969091484]
 layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
@@ -47,10 +36,31 @@ layout_mode = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="ManhuntStep" type="Label" parent="MainHUD/StatusHUD" unique_id=316064107]
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 23.0
+[node name="MoveButton" type="TextureButton" parent="MainHUD/StatusHUD" unique_id=1038628007]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -1005.0
+offset_top = -290.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MainHUD/StatusHUD" unique_id=1068503273]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -746.5
+offset_top = -1080.0
+offset_right = 746.5
+offset_bottom = 1080.0
+grow_horizontal = 2
+grow_vertical = 2
 
 [node name="PhoneOverlay" type="Control" parent="MainHUD" unique_id=1353194364]
 layout_mode = 3
@@ -64,8 +74,9 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="DialogueContainer" type="Control" parent="MainHUD" unique_id=738862750]
-layout_mode = 3
-anchors_preset = 0
+[node name="ManhuntStep" type="Label" parent="MainHUD/ManhuntOverlay" unique_id=316064107]
+layout_mode = 0
 offset_right = 40.0
-offset_bottom = 40.0
+offset_bottom = 23.0
+
+[connection signal="pressed" from="MainHUD/StatusHUD/MoveButton" to="MainHUD/StatusHUD" method="_on_move_button_pressed"]
